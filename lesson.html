@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Lección de CropEye Academy: arquitectura, datos y decisiones del proyecto CropEye.">
+  <meta name="color-scheme" content="light">
+  <title>Lección · CropEye Academy</title>
+
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/lesson.css">
+
+  <script type="module" src="assets/js/lesson-page.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#lesson-content">Saltar al contenido</a>
+
+  <header class="site-header">
+    <div class="site-header__inner">
+      <div class="site-header__brand">
+        <h1 class="site-title">
+          <a href="index.html">CropEye Academy</a>
+        </h1>
+        <p class="site-tagline">Aprende la arquitectura del proyecto CropEye desde adentro</p>
+      </div>
+      <p class="site-tagline">
+        <a href="index.html">← Volver al panel de rutas</a>
+      </p>
+    </div>
+  </header>
+
+  <div class="lesson-shell" id="lesson-shell" data-sidebar="expanded">
+    <aside class="sidebar" id="lesson-sidebar" aria-label="Lecciones de la ruta actual">
+      <div class="sidebar__header">
+        <h2 class="sidebar__title">Ruta actual</h2>
+        <button
+          class="btn btn--ghost btn--icon"
+          id="sidebar-collapse"
+          type="button"
+          aria-expanded="true"
+          aria-controls="lesson-sidebar"
+          aria-label="Ocultar panel de lecciones"
+        >
+          <span class="chevron" aria-hidden="true"></span>
+        </button>
+      </div>
+      <p class="sidebar__path" id="sidebar-path"></p>
+      <nav id="sidebar-tree" aria-label="Lecciones de esta ruta"></nav>
+    </aside>
+
+    <button
+      class="sidebar-backdrop"
+      id="sidebar-backdrop"
+      type="button"
+      aria-label="Cerrar panel de lecciones"
+      tabindex="-1"
+    ></button>
+
+    <div class="lesson-main">
+      <div class="lesson-toolbar">
+        <button
+          class="btn btn--ghost btn--icon sidebar-toggle"
+          id="sidebar-toggle"
+          type="button"
+          aria-expanded="true"
+          aria-controls="lesson-sidebar"
+          aria-label="Mostrar u ocultar las lecciones"
+        >
+          <span class="chevron" aria-hidden="true"></span>
+        </button>
+        <nav class="breadcrumbs" id="breadcrumbs" aria-label="Ruta de navegación"></nav>
+      </div>
+
+      <div id="lesson-root" class="lesson-content">
+        <div class="lesson-hero" id="lesson-hero">
+          <p class="lesson-hero__eyebrow">CropEye Academy</p>
+          <p class="lesson-hero__summary">Cargando la lección…</p>
+        </div>
+        <article
+          class="prose"
+          id="lesson-content"
+          tabindex="-1"
+          aria-busy="true"
+        ></article>
+      </div>
+
+      <div id="lesson-nav" class="lesson-footer-nav"></div>
+    </div>
+  </div>
+
+  <noscript>
+    <p class="noscript-note">
+      Este curso necesita JavaScript para cargar el contenido de la lección y guardar
+      tu progreso en el navegador. Actívalo y vuelve a cargar la página.
+    </p>
+  </noscript>
+</body>
+</html>

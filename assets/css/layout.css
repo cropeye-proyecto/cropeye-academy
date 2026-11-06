@@ -1,0 +1,151 @@
+/* Layout: page shells for the dashboard and the lesson view. */
+
+/* ---------- Shared shell ---------- */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background-color: rgba(246, 244, 238, 0.92);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+
+.site-header__inner {
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: var(--space-4) var(--space-5);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.site-header__brand {
+  min-width: 0;
+  flex: 1 1 16rem;
+}
+
+.site-title {
+  margin: 0;
+  font-size: var(--text-lg);
+  letter-spacing: -0.02em;
+}
+
+.site-title a {
+  color: var(--text);
+  text-decoration: none;
+}
+
+.site-title a:hover {
+  color: var(--accent);
+}
+
+.site-tagline {
+  margin: var(--space-1) 0 0;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  line-height: 1.4;
+}
+
+.site-header__progress {
+  flex: 0 1 20rem;
+  min-width: 12rem;
+}
+
+.page {
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-5) var(--space-8);
+}
+
+.page-intro {
+  margin-bottom: var(--space-6);
+}
+
+.page-intro h2 {
+  font-size: var(--text-xl);
+}
+
+.page-intro p {
+  max-width: 62ch;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* ---------- Dashboard ---------- */
+
+.path-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+/* ---------- Lesson view ---------- */
+
+.lesson-shell {
+  display: grid;
+  grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
+  align-items: start;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.lesson-shell[data-sidebar="collapsed"] {
+  grid-template-columns: 0 minmax(0, 1fr);
+}
+
+.lesson-main {
+  min-width: 0;
+  padding: var(--space-5) var(--space-5) var(--space-6);
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - var(--header-height));
+}
+
+.lesson-content {
+  width: 100%;
+  max-width: var(--reading-width);
+  margin: 0 auto;
+  flex: 1 0 auto;
+}
+
+/* Footer bar: anchored to the end of the content flow, never fixed to the viewport. */
+.lesson-footer-nav {
+  width: 100%;
+  max-width: var(--reading-width);
+  margin: var(--space-7) auto 0;
+  padding: var(--space-3) 0 0;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 900px) {
+  .lesson-shell,
+  .lesson-shell[data-sidebar="collapsed"] {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .lesson-main {
+    padding: var(--space-4) var(--space-4) var(--space-5);
+  }
+
+  .site-header__inner {
+    padding: var(--space-3) var(--space-4);
+    gap: var(--space-3);
+  }
+
+  .site-header__progress {
+    flex-basis: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .page {
+    padding: var(--space-5) var(--space-4) var(--space-7);
+  }
+
+  .site-tagline {
+    font-size: var(--text-xs);
+  }
+}

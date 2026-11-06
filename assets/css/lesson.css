@@ -1,0 +1,337 @@
+/* Lesson view: breadcrumbs, reading typography, callouts, code, tables. */
+
+/* ---------- Toolbar / breadcrumbs ---------- */
+
+.lesson-toolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  max-width: var(--reading-width);
+  width: 100%;
+  margin: 0 auto var(--space-4);
+}
+
+.breadcrumbs {
+  min-width: 0;
+  flex: 1 1 auto;
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+}
+
+.breadcrumbs__list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.breadcrumbs__list li {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.breadcrumbs__list li + li::before {
+  content: "›";
+  color: var(--border);
+  margin-right: var(--space-1);
+}
+
+.breadcrumbs a {
+  color: var(--text-muted);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+
+.breadcrumbs a:hover {
+  color: var(--accent);
+  border-bottom-color: var(--accent-soft);
+}
+
+.breadcrumbs [aria-current="page"] {
+  color: var(--text);
+  font-weight: 600;
+}
+
+/* Toggle shown on all sizes on mobile, and on desktop as a collapse control. */
+.sidebar-toggle {
+  flex: 0 0 auto;
+}
+
+/* ---------- Lesson hero ---------- */
+
+.lesson-hero {
+  max-width: var(--reading-width);
+  width: 100%;
+  margin: 0 auto var(--space-5);
+  padding-bottom: var(--space-5);
+  border-bottom: 1px solid var(--border);
+}
+
+.lesson-hero__eyebrow {
+  margin: 0 0 var(--space-2);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.lesson-hero__title {
+  margin: 0 0 var(--space-2);
+  font-size: var(--text-xl);
+  letter-spacing: -0.02em;
+}
+
+.lesson-hero__summary {
+  margin: 0 0 var(--space-3);
+  color: var(--text-muted);
+  font-size: var(--text-md);
+  line-height: 1.5;
+  max-width: 62ch;
+}
+
+.lesson-hero__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+}
+
+.lesson-hero__meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.lesson-hero__status[data-completed="true"] {
+  color: var(--success);
+  font-weight: 700;
+}
+
+.lesson-hero__status[data-completed="false"] {
+  color: var(--text-muted);
+}
+
+/* ---------- Reading column ---------- */
+
+.prose {
+  max-width: var(--reading-width);
+  width: 100%;
+  margin: 0 auto;
+  font-family: var(--font-serif);
+  font-size: var(--text-md);
+  line-height: 1.7;
+  color: var(--text);
+}
+
+.prose > * + * {
+  margin-top: var(--space-4);
+}
+
+.prose p {
+  margin: 0;
+}
+
+.prose h1 {
+  font-family: var(--font-sans);
+  font-size: var(--text-xl);
+  margin-top: var(--space-6);
+}
+
+/* The hero already renders the lesson title, so hide a duplicated H1. */
+.prose h1:first-child {
+  display: none;
+}
+
+.prose h2 {
+  font-family: var(--font-sans);
+  font-size: var(--text-lg);
+  margin-top: var(--space-6);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border);
+}
+
+.prose h3 {
+  font-family: var(--font-sans);
+  font-size: var(--text-md);
+  margin-top: var(--space-5);
+}
+
+.prose h4 {
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  margin-top: var(--space-4);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+}
+
+.prose strong {
+  font-weight: 700;
+  color: var(--text);
+}
+
+.prose em {
+  font-style: italic;
+}
+
+.prose a {
+  color: var(--accent);
+}
+
+.prose ul,
+.prose ol {
+  padding-left: var(--space-5);
+  margin: 0;
+}
+
+.prose li {
+  margin-bottom: var(--space-2);
+}
+
+.prose li > ul,
+.prose li > ol {
+  margin-top: var(--space-2);
+}
+
+.prose blockquote {
+  margin: var(--space-5) 0;
+  padding: var(--space-3) var(--space-5);
+  border-left: 3px solid var(--accent-soft);
+  background-color: var(--surface);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.prose blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+.prose hr {
+  margin: var(--space-6) 0;
+}
+
+/* Inline code */
+.prose :not(pre) > code {
+  padding: 0.12em 0.36em;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background-color: var(--surface);
+  color: var(--text);
+  font-size: 0.85em;
+  overflow-wrap: break-word;
+}
+
+/* Fenced code blocks */
+.prose pre {
+  margin: var(--space-5) 0;
+  padding: var(--space-4);
+  overflow-x: auto;
+  background-color: #2C2520;
+  color: #EDE7DB;
+  border-radius: var(--radius-md);
+  border: 1px solid #3A322B;
+  line-height: 1.55;
+  font-size: var(--text-sm);
+  -webkit-overflow-scrolling: touch;
+}
+
+.prose pre code {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font-size: inherit;
+  white-space: pre;
+}
+
+/* ---------- Callouts ---------- */
+
+.callout {
+  margin: var(--space-5) 0;
+  padding: var(--space-4) var(--space-4) var(--space-3);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent-soft);
+  border-radius: var(--radius-md);
+  background-color: var(--surface);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: 1.6;
+}
+
+.callout__label {
+  display: block;
+  margin-bottom: var(--space-2);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.callout p:last-child,
+.callout ul:last-child,
+.callout ol:last-child {
+  margin-bottom: 0;
+}
+
+.callout--note {
+  border-left-color: var(--accent-soft);
+  background-color: var(--surface);
+}
+
+.callout--warning {
+  border-left-color: #A9713F;
+  background-color: #F4EADF;
+  border-color: #E0CFB9;
+}
+
+.callout--warning .callout__label {
+  color: #8A5A2E;
+}
+
+/* ---------- Tables (defensive: content may include simple tables) ---------- */
+
+.prose table {
+  margin: var(--space-5) 0;
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.prose th,
+.prose td {
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+  vertical-align: top;
+}
+
+.prose th {
+  background-color: var(--surface);
+  font-weight: 700;
+}
+
+.prose tr:last-child td {
+  border-bottom: 0;
+}
+
+@media (max-width: 600px) {
+  .prose {
+    font-size: var(--text-base);
+  }
+
+  .lesson-hero__title {
+    font-size: var(--text-lg);
+  }
+}

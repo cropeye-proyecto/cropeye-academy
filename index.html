@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="CropEye Academy: curso interactivo sobre la arquitectura del proyecto CropEye, de la agronomía al despliegue.">
+  <meta name="color-scheme" content="light">
+  <title>CropEye Academy · Aprende la arquitectura desde adentro</title>
+
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+
+  <script type="module" src="assets/js/main.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Saltar al contenido</a>
+
+  <header class="site-header">
+    <div class="site-header__inner">
+      <div class="site-header__brand">
+        <h1 class="site-title">
+          <a href="index.html">CropEye Academy</a>
+        </h1>
+        <p class="site-tagline" id="site-tagline">
+          Aprende la arquitectura del proyecto CropEye desde adentro
+        </p>
+      </div>
+      <div class="site-header__progress" id="header-progress"></div>
+    </div>
+  </header>
+
+  <main id="main-content" class="page">
+    <div class="page-intro">
+      <h2>Rutas de aprendizaje</h2>
+      <p>
+        Seis rutas y veinticuatro lecciones cortas para reconstruir cómo funciona CropEye:
+        el problema agronómico, el modelo, el backend, la aplicación móvil, la integración
+        y la documentación que sostiene las decisiones.
+      </p>
+    </div>
+
+    <div id="curriculum-root" class="path-list" aria-busy="true">
+      <p class="text-muted">Cargando el currículo…</p>
+    </div>
+
+    <noscript>
+      <p class="noscript-note">
+        Este curso necesita JavaScript para cargar el currículo y guardar tu progreso
+        en el navegador. Actívalo y vuelve a cargar la página.
+      </p>
+    </noscript>
+  </main>
+</body>
+</html>

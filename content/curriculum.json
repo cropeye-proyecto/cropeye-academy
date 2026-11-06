@@ -1,0 +1,469 @@
+{
+  "version": 1,
+  "title": "CropEye Academy",
+  "tagline": "Aprende la arquitectura del proyecto CropEye desde adentro",
+  "paths": [
+    {
+      "id": "p1",
+      "title": "Fundamentos y Contexto",
+      "description": "El problema agronómico, el producto y las personas detrás de CropEye, antes de entrar en el código.",
+      "modules": [
+        {
+          "id": "p1-m1",
+          "title": "El problema agronómico",
+          "description": "Qué se intenta resolver y por qué el tiempo de detección es la variable decisiva.",
+          "sections": [
+            {
+              "id": "p1-m1-s1",
+              "title": "Enfermedades foliares en tomate y papa",
+              "description": "Panorama de las enfermedades que afectan las hojas de tomate y papa y cómo se reconocen.",
+              "lessons": [
+                {
+                  "id": "p1-m1-s1-l1",
+                  "title": "Qué es una enfermedad foliar",
+                  "summary": "Define qué es una enfermedad foliar y por qué las hojas son el primer lugar donde se detecta un problema agronómico.",
+                  "minutes": 7,
+                  "file": "content/lessons/p1-m1-s1-l1.md"
+                }
+              ]
+            },
+            {
+              "id": "p1-m1-s2",
+              "title": "Detección temprana: impacto y límites",
+              "description": "El costo de detectar tarde y los límites reales de una foto tomada en terreno.",
+              "lessons": [
+                {
+                  "id": "p1-m1-s2-l1",
+                  "title": "Por qué el momento de la detección lo cambia todo",
+                  "summary": "Explica cómo el retraso en la detección multiplica el daño y qué límites impone una sola fotografía.",
+                  "minutes": 6,
+                  "file": "content/lessons/p1-m1-s2-l1.md"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "p1-m2",
+          "title": "El producto y el equipo",
+          "description": "Quiénes construyen CropEye y qué piezas componen el sistema completo.",
+          "sections": [
+            {
+              "id": "p1-m2-s1",
+              "title": "Recorrido de usuario: de la foto al diagnóstico",
+              "description": "El recorrido que hace una persona desde que fotografía una hoja hasta que recibe un diagnóstico.",
+              "lessons": [
+                {
+                  "id": "p1-m2-s1-l1",
+                  "title": "El viaje de una foto",
+                  "summary": "Sigue el recorrido completo de una foto desde la cámara del teléfono hasta el diagnóstico que ve el usuario.",
+                  "minutes": 8,
+                  "file": "content/lessons/p1-m2-s1-l1.md"
+                }
+              ]
+            },
+            {
+              "id": "p1-m2-s2",
+              "title": "Las cuatro piezas del sistema",
+              "description": "Aplicación móvil, API de inferencia, backend y datos: cuatro responsabilidades distintas.",
+              "lessons": [
+                {
+                  "id": "p1-m2-s2-l1",
+                  "title": "Mapa general antes del detalle",
+                  "summary": "Presenta las cuatro piezas del sistema y la responsabilidad que cumple cada una.",
+                  "minutes": 9,
+                  "file": "content/lessons/p1-m2-s2-l1.md"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "p2",
+      "title": "Visión por Computadora",
+      "description": "Datos, versiones del modelo y la lógica que decide cuándo una predicción es confiable.",
+      "modules": [
+        {
+          "id": "p2-m1",
+          "title": "Datos y entrenamiento",
+          "description": "De dónde salen las imágenes y por qué el laboratorio no representa el campo.",
+          "sections": [
+            {
+              "id": "p2-m1-s1",
+              "title": "Los seis datasets y el set sellado de 801 fotos",
+              "description": "Las seis fuentes de imágenes, sus licencias y el set sellado de 801 fotos de campo.",
+              "lessons": [
+                {
+                  "id": "p2-m1-s1-l1",
+                  "title": "De dónde salen las imágenes",
+                  "summary": "Describe las seis fuentes de imágenes, sus licencias heterogéneas y el set sellado de 801 fotos de campo.",
+                  "minutes": 9,
+                  "file": "content/lessons/p2-m1-s1-l1.md"
+                }
+              ]
+            },
+            {
+              "id": "p2-m1-s2",
+              "title": "De v1 a v4: por qué el laboratorio engaña",
+              "description": "La evolución de MobileNetV2 al ensemble v4 y las métricas que obligaron a cambiar.",
+              "lessons": [
+                {
+                  "id": "p2-m1-s2-l1",
+                  "title": "Tres versiones, tres lecciones",
+                  "summary": "Compara las cuatro versiones del modelo y muestra por qué una métrica alta en laboratorio puede esconder un fracaso en terreno.",
+                  "minutes": 11,
+                  "file": "content/lessons/p2-m1-s2-l1.md"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "p2-m2",
+          "title": "El modelo en producción",
+          "description": "Cómo se combinan tres modelos, cómo se rechaza una imagen y cómo se explica la decisión.",
+          "sections": [
+            {
+              "id": "p2-m2-s1",
+              "title": "Ensemble, 13 clases + «Otra» y umbral 0,60",
+              "description": "El ensemble de tres modelos, las 13 clases más «Otra» y el umbral de 0,60.",
+              "lessons": [
+                {
+                  "id": "p2-m2-s1-l1",
+                  "title": "Decidir cuándo no responder",
+                  "summary": "Explica el ensemble de tres modelos, las 14 salidas y el umbral de 0,60 que permite rechazar una imagen.",
+                  "minutes": 10,
+                  "file": "content/lessons/p2-m2-s1-l1.md"
+                }
+              ]
+            },
+            {
+              "id": "p2-m2-s2",
+              "title": "Grad-CAM y la API de inferencia",
+              "description": "Grad-CAM para justificar la predicción y la API que la expone.",
+              "lessons": [
+                {
+                  "id": "p2-m2-s2-l1",
+                  "title": "Explicar la predicción y servirla",
+                  "summary": "Muestra cómo Grad-CAM justifica una predicción y cómo la API de inferencia la entrega.",
+                  "minutes": 10,
+                  "file": "content/lessons/p2-m2-s2-l1.md"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "p3",
+      "title": "Backend y Persistencia",
+      "description": "Identidad, datos y el ciclo completo de un análisis asíncrono en FastAPI.",
+      "modules": [
+        {
+          "id": "p3-m1",
+          "title": "Identidad y datos",
+          "description": "El modelo relacional y el sistema de permisos que sostiene la aplicación.",
+          "sections": [
+            {
+              "id": "p3-m1-s1",
+              "title": "FastAPI, las 11 tablas y RFC 7807",
+              "description": "Las once tablas del dominio, sus relaciones y el formato de error RFC 7807.",
+              "lessons": [
+                {
+                  "id": "p3-m1-s1-l1",
+                  "title": "Modelar el dominio en once tablas",
+                  "summary": "Recorre las once tablas del backend y el formato de error RFC 7807 que estandariza las respuestas.",
+                  "minutes": 11,
+                  "file": "content/lessons/p3-m1-s1-l1.md"
+                }
+              ]
+            },
+            {
+              "id": "p3-m1-s2",
+              "title": "JWT, roles y lockout",
+              "description": "JWT con access y refresh, roles USUARIO/ADMINISTRADOR y bloqueo por intentos fallidos.",
+              "lessons": [
+                {
+                  "id": "p3-m1-s2-l1",
+                  "title": "Quién puede hacer qué",
+                  "summary": "Detalla el ciclo de vida de un JWT, los roles y el bloqueo tras cinco intentos fallidos.",
+                  "minutes": 10,
+                  "file": "content/lessons/p3-m1-s2-l1.md"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "p3-m2",
+          "title": "El ciclo del análisis",
+          "description": "Qué ocurre entre la subida de una imagen y el resultado disponible.",
+          "sections": [
+            {
+              "id": "p3-m2-s1",
+              "title": "Estados asíncronos y storage dual",
+              "description": "Estados asíncronos, almacenamiento local o S3 y la auditoría de cada cambio.",
+              "lessons": [
+                {
+                  "id": "p3-m2-s1-l1",
+                  "title": "Un análisis que todavía no terminó",
+                  "summary": "Sigue un análisis asíncrono por sus cinco estados y el almacenamiento dual local o S3.",
+                  "minutes": 10,
+                  "file": "content/lessons/p3-m2-s1-l1.md"
+                }
+              ]
+            },
+            {
+              "id": "p3-m2-s2",
+              "title": "El adaptador de inferencia",
+              "description": "El adaptador que aísla al backend de la API de inferencia.",
+              "lessons": [
+                {
+                  "id": "p3-m2-s2-l1",
+                  "title": "La frontera entre backend e IA",
+                  "summary": "Explica el adaptador que separa al backend de la API de inferencia y por qué esa frontera importa.",
+                  "minutes": 9,
+                  "file": "content/lessons/p3-m2-s2-l1.md"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "p4",
+      "title": "Aplicación Móvil",
+      "description": "La entrada del sistema: captura, compresión y presentación del resultado en Flutter.",
+      "modules": [
+        {
+          "id": "p4-m1",
+          "title": "Captura",
+          "description": "Decisiones de cámara que afectan directamente la calidad de la predicción.",
+          "sections": [
+            {
+              "id": "p4-m1-s1",
+              "title": "Flutter y el flujo de cámara",
+              "description": "El flujo de cámara en Flutter y el marco guía que encuadra la hoja.",
+              "lessons": [
+                {
+                  "id": "p4-m1-s1-l1",
+                  "title": "Construir la entrada del sistema",
+                  "summary": "Describe el flujo de cámara en Flutter y el marco guía que ayuda a encuadrar la hoja.",
+                  "minutes": 9,
+                  "file": "content/lessons/p4-m1-s1-l1.md"
+                }
+              ]
+            },
+            {
+              "id": "p4-m1-s2",
+              "title": "Compresión, marco guía y selector de cultivo",
+              "description": "Compresión a 1600 px, selector de cultivo y su efecto en el modelo.",
+              "lessons": [
+                {
+                  "id": "p4-m1-s2-l1",
+                  "title": "Tres decisiones que afectan la precisión",
+                  "summary": "Analiza compresión, marco guía y selector de cultivo como decisiones de precisión, no de interfaz.",
+                  "minutes": 8,
+                  "file": "content/lessons/p4-m1-s2-l1.md"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "p4-m2",
+          "title": "Resultado e historial",
+          "description": "Cómo se comunica la confianza y qué se conserva en el dispositivo.",
+          "sections": [
+            {
+              "id": "p4-m2-s1",
+              "title": "Diagnóstico y confianza en pantalla",
+              "description": "Diagnóstico, nivel de confianza y el riesgo de comunicar incertidumbre mal.",
+              "lessons": [
+                {
+                  "id": "p4-m2-s1-l1",
+                  "title": "Comunicar incertidumbre sin confundir",
+                  "summary": "Explica cómo se presenta el diagnóstico y la confianza sin inducir decisiones equivocadas.",
+                  "minutes": 8,
+                  "file": "content/lessons/p4-m2-s1-l1.md"
+                }
+              ]
+            },
+            {
+              "id": "p4-m2-s2",
+              "title": "Historial local y la ausencia de login",
+              "description": "Historial local con path_provider y las consecuencias de no tener login.",
+              "lessons": [
+                {
+                  "id": "p4-m2-s2-l1",
+                  "title": "Lo que no se guarda, se pierde",
+                  "summary": "Revisa el historial local con path_provider y lo que implica operar sin login.",
+                  "minutes": 8,
+                  "file": "content/lessons/p4-m2-s2-l1.md"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "p5",
+      "title": "Integración",
+      "description": "La topología que el informe declara y la que realmente corre en producción.",
+      "modules": [
+        {
+          "id": "p5-m1",
+          "title": "Topología diseñada vs real",
+          "description": "Cómo debería fluir una petición y qué ocurre cuando un componente se salta a otro.",
+          "sections": [
+            {
+              "id": "p5-m1-s1",
+              "title": "App → Backend → IA: el dibujo del informe",
+              "description": "App, backend y API de IA: dónde vive cada responsabilidad según el diseño.",
+              "lessons": [
+                {
+                  "id": "p5-m1-s1-l1",
+                  "title": "Dónde vive cada responsabilidad",
+                  "summary": "Describe la topología App → Backend → IA y la responsabilidad de cada salto.",
+                  "minutes": 10,
+                  "file": "content/lessons/p5-m1-s1-l1.md"
+                }
+              ]
+            },
+            {
+              "id": "p5-m1-s2",
+              "title": "La app salta el backend: consecuencias",
+              "description": "La app habla directo con la IA en 10.0.2.2:8000 y evita el backend en 8100.",
+              "lessons": [
+                {
+                  "id": "p5-m1-s2-l1",
+                  "title": "El atajo que rompe la arquitectura",
+                  "summary": "Analiza qué se pierde cuando la app llama directamente a la API de inferencia.",
+                  "minutes": 10,
+                  "file": "content/lessons/p5-m1-s2-l1.md"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "p5-m2",
+          "title": "Migración y despliegue",
+          "description": "El backend abandonado, el despliegue real y las promesas de infraestructura.",
+          "sections": [
+            {
+              "id": "p5-m2-s1",
+              "title": "cropeye-api: el backend abandonado",
+              "description": "cropeye-api, el backend anterior que quedó en la organización.",
+              "lessons": [
+                {
+                  "id": "p5-m2-s1-l1",
+                  "title": "El costo de mantener dos backends",
+                  "summary": "Explica por qué cropeye-api quedó obsoleto y qué cuesta sostener dos backends.",
+                  "minutes": 9,
+                  "file": "content/lessons/p5-m2-s1-l1.md"
+                }
+              ]
+            },
+            {
+              "id": "p5-m2-s2",
+              "title": "Despliegue real, AWS prometido y CI/CD ausente",
+              "description": "Lo que documenta AWS y lo que efectivamente se ejecuta hoy.",
+              "lessons": [
+                {
+                  "id": "p5-m2-s2-l1",
+                  "title": "Lo que dice el papel y lo que corre",
+                  "summary": "Contrasta la infraestructura documentada con lo que realmente se despliega hoy.",
+                  "minutes": 9,
+                  "file": "content/lessons/p5-m2-s2-l1.md"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "p6",
+      "title": "Documentación y Gestión",
+      "description": "Informes, RFCs y la trazabilidad entre lo escrito y lo construido.",
+      "modules": [
+        {
+          "id": "p6-m1",
+          "title": "Informes y RFCs",
+          "description": "Los artefactos que registran decisiones y sus contradicciones.",
+          "sections": [
+            {
+              "id": "p6-m1-s1",
+              "title": "Los tres informes y sus contradicciones",
+              "description": "Los tres informes del proyecto y las afirmaciones que quedaron desactualizadas.",
+              "lessons": [
+                {
+                  "id": "p6-m1-s1-l1",
+                  "title": "Cuando el documento se desactualiza",
+                  "summary": "Compara los tres informes y las inconsistencias que el tercero todavía arrastra.",
+                  "minutes": 9,
+                  "file": "content/lessons/p6-m1-s1-l1.md"
+                }
+              ]
+            },
+            {
+              "id": "p6-m1-s2",
+              "title": "RFC-01 a RFC-05: decisiones que cambiaron el diseño",
+              "description": "Cinco RFCs que cambiaron el rumbo del diseño.",
+              "lessons": [
+                {
+                  "id": "p6-m1-s2-l1",
+                  "title": "Cómo se registra un cambio de rumbo",
+                  "summary": "Reconstruye las cinco RFC y el cambio de rumbo que registra cada una.",
+                  "minutes": 9,
+                  "file": "content/lessons/p6-m1-s2-l1.md"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "p6-m2",
+          "title": "Trazabilidad",
+          "description": "Cómo seguir una historia de usuario hasta el código y auditar el conjunto.",
+          "sections": [
+            {
+              "id": "p6-m2-s1",
+              "title": "De la historia de usuario al código",
+              "description": "El recorrido desde HU01 hasta la implementación y las pruebas.",
+              "lessons": [
+                {
+                  "id": "p6-m2-s1-l1",
+                  "title": "Seguir el hilo completo",
+                  "summary": "Sigue el hilo desde una historia de usuario hasta su implementación y sus pruebas.",
+                  "minutes": 10,
+                  "file": "content/lessons/p6-m2-s1-l1.md"
+                }
+              ]
+            },
+            {
+              "id": "p6-m2-s2",
+              "title": "Auditar un proyecto contra sus papeles",
+              "description": "Una checklist para contrastar un proyecto contra su propia documentación.",
+              "lessons": [
+                {
+                  "id": "p6-m2-s2-l1",
+                  "title": "Checklist de auditoría técnica",
+                  "summary": "Propone una checklist para auditar un proyecto contra sus propios documentos.",
+                  "minutes": 10,
+                  "file": "content/lessons/p6-m2-s2-l1.md"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

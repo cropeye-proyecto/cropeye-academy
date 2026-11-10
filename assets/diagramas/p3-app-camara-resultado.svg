@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 300" role="img" aria-labelledby="t d" font-family="-apple-system, Segoe UI, Roboto, Arial, sans-serif">
+  <title id="t">Recorrido de un análisis dentro de la app</title>
+  <desc id="d">La pantalla de cámara entrega la ruta de la foto y el cultivo a la pantalla de análisis. La pantalla de análisis llama a PrepararImagen, que devuelve un JPEG, luego al cliente CropEyeApi, que envía la foto al servidor y devuelve el resultado o un error. Finalmente la pantalla guarda en el historial y muestra el resultado o el error.</desc>
+  <defs>
+    <marker id="f" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10z" fill="#4F6F52"/></marker>
+  </defs>
+  <rect width="680" height="300" fill="#F6F4EE"/>
+  <g fill="#EAE5D9" stroke="#D5CEBE" stroke-width="2">
+    <rect x="15" y="110" width="140" height="70" rx="8"/>
+    <rect x="215" y="110" width="160" height="70" rx="8"/>
+    <rect x="440" y="20" width="200" height="60" rx="8"/>
+    <rect x="440" y="115" width="200" height="60" rx="8"/>
+    <rect x="440" y="210" width="200" height="60" rx="8"/>
+  </g>
+  <g text-anchor="middle" fill="#2C2520">
+    <text x="85" y="140" font-size="14" font-weight="700">Cámara</text>
+    <text x="85" y="160" font-size="12" fill="#685B50">camara_screen.dart</text>
+    <text x="295" y="140" font-size="14" font-weight="700">Pantalla de análisis</text>
+    <text x="295" y="160" font-size="12" fill="#685B50">analisis_screen.dart</text>
+    <text x="540" y="46" font-size="14" font-weight="700">1. PrepararImagen</text>
+    <text x="540" y="65" font-size="12" fill="#685B50">JPEG · ≤1600 px · sin EXIF</text>
+    <text x="540" y="141" font-size="14" font-weight="700">2. CropEyeApi</text>
+    <text x="540" y="160" font-size="12" fill="#685B50">directa · backend · simulada</text>
+    <text x="540" y="236" font-size="14" font-weight="700">3. Historial</text>
+    <text x="540" y="255" font-size="12" fill="#685B50">guarda foto, mapa y resultado</text>
+  </g>
+  <g stroke="#4F6F52" stroke-width="2.5" fill="none" marker-end="url(#f)">
+    <line x1="157" y1="145" x2="211" y2="145"/>
+    <path d="M377 130 L 436 55"/>
+    <line x1="377" y1="145" x2="436" y2="145"/>
+    <path d="M377 160 L 436 235"/>
+  </g>
+  <text x="185" y="135" text-anchor="middle" font-size="12" fill="#685B50">ruta + cultivo</text>
+  <rect x="215" y="215" width="160" height="56" rx="8" fill="#F3EADF" stroke="#9A6B3F" stroke-width="1.5"/>
+  <text x="295" y="238" text-anchor="middle" font-size="13" font-weight="700" fill="#2C2520">Cualquier error</text>
+  <text x="295" y="257" text-anchor="middle" font-size="12" fill="#2C2520">→ pantalla de error</text>
+  <line x1="295" y1="182" x2="295" y2="211" stroke="#9A6B3F" stroke-width="2" stroke-dasharray="5 4"/>
+</svg>

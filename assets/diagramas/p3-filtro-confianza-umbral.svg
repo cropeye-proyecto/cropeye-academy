@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 330" role="img" aria-labelledby="t d" font-family="-apple-system, Segoe UI, Roboto, Arial, sans-serif">
+  <title id="t">Las tres barreras antes de mostrar un diagnóstico</title>
+  <desc id="d">Una foto pasa por tres preguntas en orden. Primera, el filtro: ¿es una hoja? Si no, se responde "no parece una hoja". Segunda, ¿ganó la salida Otra? Si sí, resultado no confiable. Tercera, ¿la confianza alcanza el umbral? Si no, resultado no confiable. Si pasa las tres, el resultado es confiable y se muestra con su ficha.</desc>
+  <defs>
+    <marker id="f" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10z" fill="#4F6F52"/></marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10z" fill="#9A6B3F"/></marker>
+  </defs>
+  <rect width="680" height="330" fill="#F6F4EE"/>
+  <g fill="#EAE5D9" stroke="#D5CEBE" stroke-width="2">
+    <rect x="10" y="40" width="110" height="60" rx="8"/>
+    <rect x="150" y="40" width="140" height="60" rx="8"/>
+    <rect x="320" y="40" width="140" height="60" rx="8"/>
+    <rect x="490" y="40" width="140" height="60" rx="8"/>
+  </g>
+  <g text-anchor="middle" fill="#2C2520">
+    <text x="65" y="76" font-size="15" font-weight="700">Foto</text>
+    <text x="220" y="66" font-size="14" font-weight="700">1. Filtro</text>
+    <text x="220" y="86" font-size="13">¿es una hoja?</text>
+    <text x="390" y="66" font-size="14" font-weight="700">2. "Otra"</text>
+    <text x="390" y="86" font-size="13">¿la conoce?</text>
+    <text x="560" y="66" font-size="14" font-weight="700">3. Umbral</text>
+    <text x="560" y="86" font-size="13">¿confianza ≥ 0,60?</text>
+  </g>
+  <g stroke="#4F6F52" stroke-width="2.5" marker-end="url(#f)">
+    <line x1="121" y1="70" x2="147" y2="70"/>
+    <line x1="291" y1="70" x2="317" y2="70"/>
+    <line x1="461" y1="70" x2="487" y2="70"/>
+    <path d="M630 100 V 250 H 600" fill="none"/>
+  </g>
+  <g font-size="12.5" fill="#3E5940" font-weight="700">
+    <text x="297" y="60">sí</text>
+    <text x="467" y="60">sí</text>
+    <text x="638" y="180">sí</text>
+  </g>
+  <g stroke="#9A6B3F" stroke-width="2.5" marker-end="url(#g)" fill="none">
+    <path d="M220 101 V 160"/>
+    <path d="M390 101 V 160"/>
+    <path d="M560 101 V 130 H 470 V 160"/>
+  </g>
+  <g font-size="12.5" fill="#9A6B3F" font-weight="700">
+    <text x="228" y="135">no</text>
+    <text x="398" y="135">ganó "Otra"</text>
+    <text x="505" y="124">no</text>
+  </g>
+  <g fill="#F3EADF" stroke="#9A6B3F" stroke-width="1.5">
+    <rect x="150" y="164" width="140" height="58" rx="8"/>
+    <rect x="320" y="164" width="200" height="58" rx="8"/>
+  </g>
+  <g text-anchor="middle" fill="#2C2520">
+    <text x="220" y="189" font-size="13.5" font-weight="700">"No parece</text>
+    <text x="220" y="207" font-size="13.5" font-weight="700">una hoja"</text>
+    <text x="420" y="189" font-size="13.5" font-weight="700">No confiable</text>
+    <text x="420" y="207" font-size="12.5">sin ficha · otra foto</text>
+  </g>
+  <rect x="380" y="226" width="220" height="50" rx="8" fill="#E3EFE0" stroke="#5F8D4E" stroke-width="1.5"/>
+  <text x="490" y="248" text-anchor="middle" font-size="13.5" font-weight="700" fill="#2C2520">Confiable</text>
+  <text x="490" y="266" text-anchor="middle" font-size="12.5" fill="#2C2520">resultado + ficha</text>
+  <text x="20" y="310" font-size="13" fill="#685B50">El filtro corre antes del modelo; "Otra" y el umbral se combinan en el campo confiable.</text>
+</svg>

@@ -17,10 +17,10 @@
   <path d="M60 275 C 160 274, 230 270, 270 258 S 380 215, 430 170 S 540 60, 640 45" fill="none" stroke="#4F6F52" stroke-width="4"/>
   <!-- fases -->
   <g font-size="14" fill="#2C2520" text-anchor="middle">
-    <text x="155" y="250">Incubación</text>
-    <text x="155" y="268" fill="#685B50" font-size="13">la hoja se ve sana</text>
-    <text x="315" y="225">Primeros síntomas</text>
-    <text x="315" y="243" fill="#685B50" font-size="13">manchas pequeñas</text>
+    <text x="155" y="232">Incubación</text>
+    <text x="155" y="250" fill="#685B50" font-size="13">la hoja se ve sana</text>
+    <text x="315" y="190">Primeros síntomas</text>
+    <text x="315" y="208" fill="#685B50" font-size="13">manchas pequeñas</text>
     <text x="545" y="150">Propagación</text>
     <text x="545" y="168" fill="#685B50" font-size="13">nuevas esporas</text>
   </g>

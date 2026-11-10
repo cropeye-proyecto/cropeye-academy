@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 340" role="img" aria-labelledby="t d" font-family="-apple-system, Segoe UI, Roboto, Arial, sans-serif">
+  <title id="t">Mapa de errores</title>
+  <desc id="d">Cuatro zonas de fallo en columnas: teléfono (foto ilegible), red (sin conexión, tiempo agotado), API (413 foto muy grande, 415 formato, 422 no es hoja o imagen inválida) y servidor (5xx, respuesta fuera del contrato). Todas convergen en ErrorAnalisis. Debajo, dos acciones: reintentar para red y servidor; tomar otra foto para teléfono y API.</desc>
+  <defs>
+    <marker id="f" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10z" fill="#685B50"/></marker>
+  </defs>
+  <rect width="680" height="340" fill="#F6F4EE"/>
+  <g fill="#EAE5D9" stroke="#D5CEBE" stroke-width="2">
+    <rect x="10" y="15" width="155" height="120" rx="8"/>
+    <rect x="178" y="15" width="155" height="120" rx="8"/>
+    <rect x="346" y="15" width="155" height="120" rx="8"/>
+    <rect x="514" y="15" width="155" height="120" rx="8"/>
+  </g>
+  <g font-size="14.5" font-weight="700" fill="#2C2520" text-anchor="middle">
+    <text x="87" y="40">Teléfono</text>
+    <text x="255" y="40">Red</text>
+    <text x="423" y="40">API</text>
+    <text x="591" y="40">Servidor</text>
+  </g>
+  <g font-size="12.5" fill="#2C2520" text-anchor="middle">
+    <text x="87" y="66">foto ilegible</text>
+    <text x="87" y="86">formato raro</text>
+    <text x="255" y="66">sin conexión</text>
+    <text x="255" y="86">servidor caído</text>
+    <text x="255" y="106">tiempo agotado (20 s)</text>
+    <text x="423" y="66">413 muy grande</text>
+    <text x="423" y="86">415 formato</text>
+    <text x="423" y="106">422 no es hoja /</text>
+    <text x="423" y="124">imagen inválida</text>
+    <text x="591" y="66">5xx error interno</text>
+    <text x="591" y="86">JSON fuera</text>
+    <text x="591" y="106">del contrato</text>
+  </g>
+  <g stroke="#685B50" stroke-width="2" fill="none" marker-end="url(#f)">
+    <path d="M87 137 L 300 178"/>
+    <path d="M255 137 L 320 176"/>
+    <path d="M423 137 L 360 176"/>
+    <path d="M591 137 L 380 178"/>
+  </g>
+  <rect x="230" y="180" width="220" height="48" rx="8" fill="#2C2520"/>
+  <text x="340" y="203" text-anchor="middle" font-size="14" font-weight="700" fill="#F6F4EE">ErrorAnalisis</text>
+  <text x="340" y="220" text-anchor="middle" font-size="12" fill="#F6F4EE">tipo · mensaje · código HTTP</text>
+  <rect x="40" y="255" width="280" height="68" rx="8" fill="#E3EFE0" stroke="#5F8D4E" stroke-width="1.5"/>
+  <rect x="360" y="255" width="280" height="68" rx="8" fill="#F3EADF" stroke="#9A6B3F" stroke-width="1.5"/>
+  <g text-anchor="middle" fill="#2C2520">
+    <text x="180" y="281" font-size="14" font-weight="700">Reintentar</text>
+    <text x="180" y="302" font-size="12.5">red y servidor: la foto no es el problema</text>
+    <text x="500" y="281" font-size="14" font-weight="700">Tomar otra foto</text>
+    <text x="500" y="302" font-size="12.5">teléfono y API: el problema es la foto</text>
+  </g>
+</svg>

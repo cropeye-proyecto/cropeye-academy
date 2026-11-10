@@ -1,209 +1,113 @@
 /**
- * Lesson sidebar: tree of the current path, collapsible on desktop and a
- * drawer on mobile (backdrop, Escape to close, closes on navigation).
- * The desktop collapsed flag is persisted in localStorage.
+ * Índice lateral de la lección: partes y lecciones, con la actual marcada.
+ * En escritorio se puede plegar (la preferencia se guarda); en pantallas
+ * angostas es un panel que se abre con el botón de la cabecera.
  */
 
+import { lessonsOfPart } from '../core/content.js';
+import { isCompleted, subscribe } from '../core/state.js';
 import { el, clear, statusIcon } from '../lib/dom.js';
-import { isCompleted } from '../core/state.js';
 
-const STORAGE_KEY = 'cropeye.sidebar.collapsed';
-const MOBILE_QUERY = '(max-width: 900px)';
+const PLEGADO_KEY = 'cropeye.academy.sidebar';
+const ANGOSTO = window.matchMedia('(max-width: 899px)');
 
-function readCollapsed() {
+function leerPlegado() {
   try {
-    return window.localStorage.getItem(STORAGE_KEY) === 'true';
-  } catch (_error) {
+    return window.localStorage.getItem(PLEGADO_KEY) === '1';
+  } catch (_e) {
     return false;
   }
 }
 
-function saveCollapsed(value) {
+function guardarPlegado(valor) {
   try {
-    window.localStorage.setItem(STORAGE_KEY, String(value));
-  } catch (_error) {
-    // Storage unavailable: the preference simply does not persist.
+    window.localStorage.setItem(PLEGADO_KEY, valor ? '1' : '0');
+  } catch (_e) {
+    // Sin almacenamiento: la preferencia dura hasta recargar.
   }
 }
 
 /**
- * @param {Object} options
- * @param {HTMLElement} options.shell       element carrying data-sidebar
- * @param {HTMLElement} options.tree        container for the links
- * @param {HTMLElement} options.pathTitle   current path title node
- * @param {HTMLElement} options.toggleButton toolbar toggle
- * @param {HTMLElement} options.collapseButton in-sidebar toggle
- * @param {HTMLElement} options.backdrop    mobile backdrop
- * @param {Object} options.curriculum
- * @param {Object} options.lesson
+ * @param {{container: HTMLElement, curriculum: Object, currentId: string,
+ *          boton: HTMLButtonElement, fondo: HTMLElement}} opciones
  */
-export function mountSidebar(options) {
-  const { shell, tree, pathTitle, toggleButton, collapseButton, backdrop, curriculum, lesson } = options;
-
-  const mq = window.matchMedia(MOBILE_QUERY);
-  let collapsed = readCollapsed();
-  let drawerOpen = false;
-
-  renderTree();
-
-  function renderTree() {
-    clear(tree);
-
-    const path = (curriculum.paths || []).find((item) => item.id === lesson.pathId);
-    pathTitle.textContent = path ? path.title : '';
-
-    if (!path) return;
-
-    for (const module of path.modules || []) {
-      const wrapper = el(
-        'div',
-        { class: 'sidebar__module' },
-        el('h3', { class: 'sidebar__module-title', text: module.title }),
+export function mountSidebar({ container, curriculum, currentId, boton, fondo }) {
+  function dibujar() {
+    clear(container);
+    container.append(el('p', { class: 'indice__encabezado', text: 'Contenido del curso' }));
+    curriculum.parts.forEach((part, i) => {
+      const lecciones = lessonsOfPart(part.id);
+      const actual = lecciones.some((l) => l.id === currentId);
+      container.append(
+        el(
+          'details',
+          { class: 'indice__parte', attrs: { open: actual } },
+          el('summary', { class: 'indice__titulo-parte', text: `${i + 1}. ${part.title}` }),
+          el(
+            'ol',
+            { class: 'indice__lista' },
+            lecciones.map((l) => {
+              const esActual = l.id === currentId;
+              return el(
+                'li',
+                {},
+                el(
+                  'a',
+                  {
+                    class: `indice__enlace${esActual ? ' indice__enlace--actual' : ''}`,
+                    attrs: {
+                      href: `lesson.html?lesson=${encodeURIComponent(l.id)}`,
+                      'aria-current': esActual ? 'page' : false,
+                    },
+                  },
+                  statusIcon(isCompleted(l.id)),
+                  el('span', {
+                    text: l.kind === 'cierre' ? 'Cierre de la parte' : `${l.number}. ${l.title}`,
+                  }),
+                ),
+              );
+            }),
+          ),
+        ),
       );
+    });
+  }
 
-      for (const section of module.sections || []) {
-        wrapper.append(el('p', { class: 'sidebar__section-label', text: section.title }));
+  function abrirPanel(abierto) {
+    document.body.classList.toggle('indice-abierto', abierto);
+    boton.setAttribute('aria-expanded', String(abierto));
+    fondo.hidden = !abierto;
+    if (abierto) container.querySelector('.indice__enlace--actual, a')?.focus();
+  }
 
-        const list = el('ul', { class: 'sidebar__list' });
-        for (const item of section.lessons || []) {
-          list.append(el('li', {}, buildLink(item)));
-        }
-        wrapper.append(list);
-      }
+  function aplicarPlegado(plegado) {
+    document.body.classList.toggle('indice-plegado', plegado);
+    boton.setAttribute('aria-expanded', String(!plegado));
+  }
 
-      tree.append(wrapper);
+  boton.addEventListener('click', () => {
+    if (ANGOSTO.matches) {
+      abrirPanel(!document.body.classList.contains('indice-abierto'));
+    } else {
+      const plegado = !document.body.classList.contains('indice-plegado');
+      aplicarPlegado(plegado);
+      guardarPlegado(plegado);
     }
-  }
-
-  function buildLink(item) {
-    const current = item.id === lesson.id;
-    const completed = isCompleted(item.id);
-
-    const attrs = {
-      href: `lesson.html?lesson=${encodeURIComponent(item.id)}`,
-    };
-    if (current) attrs['aria-current'] = 'page';
-
-    return el(
-      'a',
-      {
-        class: 'sidebar__link',
-        attrs,
-        dataset: { lessonId: item.id, completed: String(completed) },
-        on: {
-          click: () => {
-            // Navigating away: close the drawer so it never lingers.
-            if (mq.matches) closeDrawer(false);
-          },
-        },
-      },
-      statusIcon(completed),
-      el(
-        'span',
-        {},
-        item.title,
-        el('span', {
-          class: 'visually-hidden',
-          dataset: { statusText: '' },
-          text: completed ? 'Completada' : 'Pendiente',
-        }),
-      ),
-    );
-  }
-
-  function sync() {
-    if (mq.matches) {
-      shell.dataset.sidebar = drawerOpen ? 'open' : 'closed';
-      const label = drawerOpen ? 'Cerrar panel de lecciones' : 'Abrir panel de lecciones';
-      for (const button of [toggleButton, collapseButton]) {
-        if (!button) continue;
-        button.setAttribute('aria-expanded', String(drawerOpen));
-        button.setAttribute('aria-label', label);
-      }
-      if (backdrop) backdrop.tabIndex = drawerOpen ? 0 : -1;
-      return;
+  });
+  fondo.addEventListener('click', () => abrirPanel(false));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && document.body.classList.contains('indice-abierto')) {
+      abrirPanel(false);
+      boton.focus();
     }
+  });
+  ANGOSTO.addEventListener?.('change', () => {
+    abrirPanel(false);
+    aplicarPlegado(!ANGOSTO.matches && leerPlegado());
+  });
 
-    shell.dataset.sidebar = collapsed ? 'collapsed' : 'expanded';
-    const label = collapsed ? 'Mostrar panel de lecciones' : 'Ocultar panel de lecciones';
-    for (const button of [toggleButton, collapseButton]) {
-      if (!button) continue;
-      button.setAttribute('aria-expanded', String(!collapsed));
-      button.setAttribute('aria-label', label);
-    }
-    if (backdrop) backdrop.tabIndex = -1;
-  }
-
-  function closeDrawer(restoreFocus) {
-    if (!drawerOpen) return;
-    drawerOpen = false;
-    sync();
-    if (restoreFocus && toggleButton) toggleButton.focus();
-  }
-
-  function handleToggle() {
-    if (mq.matches) {
-      drawerOpen = !drawerOpen;
-      sync();
-      if (drawerOpen) {
-        const first = tree.querySelector('a');
-        if (first) first.focus();
-      } else if (toggleButton) {
-        toggleButton.focus();
-      }
-      return;
-    }
-
-    collapsed = !collapsed;
-    saveCollapsed(collapsed);
-    sync();
-  }
-
-  function handleBackdrop() {
-    closeDrawer(true);
-  }
-
-  function handleKeydown(event) {
-    if (event.key === 'Escape' && mq.matches && drawerOpen) {
-      event.preventDefault();
-      closeDrawer(true);
-    }
-  }
-
-  function handleViewportChange() {
-    drawerOpen = false;
-    sync();
-  }
-
-  toggleButton?.addEventListener('click', handleToggle);
-  collapseButton?.addEventListener('click', handleToggle);
-  backdrop?.addEventListener('click', handleBackdrop);
-  document.addEventListener('keydown', handleKeydown);
-  mq.addEventListener('change', handleViewportChange);
-
-  sync();
-
-  /** Re-read completion marks without re-rendering (keeps focus intact). */
-  function refresh() {
-    for (const link of tree.querySelectorAll('[data-lesson-id]')) {
-      const completed = isCompleted(link.dataset.lessonId);
-      link.dataset.completed = String(completed);
-
-      const icon = link.querySelector('.status-icon');
-      if (icon) icon.replaceWith(statusIcon(completed));
-
-      const statusText = link.querySelector('[data-status-text]');
-      if (statusText) statusText.textContent = completed ? 'Completada' : 'Pendiente';
-    }
-  }
-
-  function destroy() {
-    toggleButton?.removeEventListener('click', handleToggle);
-    collapseButton?.removeEventListener('click', handleToggle);
-    backdrop?.removeEventListener('click', handleBackdrop);
-    document.removeEventListener('keydown', handleKeydown);
-    mq.removeEventListener('change', handleViewportChange);
-  }
-
-  return { refresh, closeDrawer, destroy };
+  if (ANGOSTO.matches) boton.setAttribute('aria-expanded', 'false');
+  else aplicarPlegado(leerPlegado());
+  dibujar();
+  subscribe(dibujar);
 }

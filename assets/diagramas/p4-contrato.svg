@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 330" role="img" aria-labelledby="t d" font-family="-apple-system, Segoe UI, Roboto, Arial, sans-serif">
+  <title id="t">El contrato entre la App y la API de IA</title>
+  <desc id="d">A la izquierda, la petición POST /analisis con dos campos: imagen (JPEG, obligatorio) y cultivo (opcional). A la derecha, la respuesta 200 con los campos cultivo, clase, nombre, confianza, confiable, gradcam_png, modelo, ms y top3 opcional. Abajo, los errores: 413, 415, 422 y 5xx.</desc>
+  <defs>
+    <marker id="f" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10z" fill="#4F6F52"/></marker>
+  </defs>
+  <rect width="680" height="330" fill="#F6F4EE"/>
+  <rect x="20" y="20" width="250" height="130" rx="8" fill="#EAE5D9" stroke="#D5CEBE" stroke-width="2"/>
+  <rect x="330" y="20" width="330" height="210" rx="8" fill="#EAE5D9" stroke="#D5CEBE" stroke-width="2"/>
+  <text x="35" y="46" font-size="15" font-weight="700" fill="#2C2520">Petición</text>
+  <text x="345" y="46" font-size="15" font-weight="700" fill="#2C2520">Respuesta 200 (JSON)</text>
+  <g font-family="ui-monospace, Consolas, monospace" font-size="13" fill="#2C2520" style="white-space: pre">
+    <text x="35" y="74">POST /analisis</text>
+    <text x="35" y="96">multipart/form-data</text>
+    <text x="35" y="120">imagen   JPEG</text>
+    <text x="35" y="140">cultivo  "tomate" (opc.)</text>
+    <text x="345" y="72">cultivo      "tomate"</text>
+    <text x="345" y="92">clase        "Tomato___Early_blight"</text>
+    <text x="345" y="112">nombre       "Tizón temprano"</text>
+    <text x="345" y="132">confianza    0.93</text>
+    <text x="345" y="152">confiable    true</text>
+    <text x="345" y="172">gradcam_png  "iVBOR…" (base64)</text>
+    <text x="345" y="192">modelo, ms</text>
+    <text x="345" y="214" fill="#685B50">top3         [...]  (opcional)</text>
+  </g>
+  <line x1="272" y1="85" x2="326" y2="85" stroke="#4F6F52" stroke-width="2.5" marker-end="url(#f)"/>
+  <rect x="20" y="250" width="640" height="62" rx="8" fill="#F3EADF" stroke="#9A6B3F" stroke-width="1.5"/>
+  <text x="35" y="274" font-size="14" font-weight="700" fill="#2C2520">Errores</text>
+  <g font-size="13" fill="#2C2520">
+    <text x="35" y="298">413 foto &gt; 10 MB · 415 no es JPG/PNG · 422 no es hoja / imagen inválida / cultivo · 5xx servidor</text>
+  </g>
+</svg>

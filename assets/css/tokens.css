@@ -1,73 +1,60 @@
-/* Design tokens: the single source of truth for colors, spacing, radii,
-   shadows and typography. Everything else in the app consumes these. */
+/* Tokens de diseño: colores, tipografía, espaciado y medidas.
+   La paleta es fija; el resto del CSS solo usa estas variables. */
 :root {
-  /* ---- Color ---- */
-  --bg: #F6F4EE;          /* warm beige / paper */
-  --surface: #EAE5D9;     /* soft sand cards */
-  --border: #D5CEBE;      /* soft earth */
-  --text: #2C2520;        /* deep bark brown */
-  --text-muted: #685B50;  /* medium brown */
-  --accent: #4F6F52;      /* dark sage green */
+  /* ---- Paleta (no cambiar) ---- */
+  --bg: #F6F4EE;          /* papel */
+  --surface: #EAE5D9;     /* arena */
+  --border: #D5CEBE;      /* tierra suave */
+  --text: #2C2520;        /* corteza */
+  --text-muted: #685B50;  /* corteza clara */
+  --accent: #4F6F52;      /* salvia */
   --accent-hover: #3E5940;
-  --accent-soft: #739072; /* soft olive */
-  --success: #5F8D4E;     /* soft moss */
+  --accent-soft: #739072;
+  --success: #5F8D4E;
   --success-bg: #E3EFE0;
 
-  /* Derived tones used for subtle backgrounds and focus rings. */
+  /* ---- Tonos derivados ---- */
   --surface-raised: #F1EDE3;
-  --surface-sunken: #E2DCCD;
   --overlay: rgba(44, 37, 32, 0.45);
   --focus-ring: #4F6F52;
+  --warning-border: #9A6B3F;   /* tierra, para advertencias */
+  --warning-bg: #F3EADF;
+  --code-bg: #2C2520;
+  --code-text: #F6F4EE;
 
-  /* ---- Spacing scale (4px base) ---- */
-  --space-1: 0.25rem;   /* 4px  */
-  --space-2: 0.5rem;    /* 8px  */
-  --space-3: 0.75rem;   /* 12px */
-  --space-4: 1rem;      /* 16px */
-  --space-5: 1.5rem;    /* 24px */
-  --space-6: 2rem;      /* 32px */
-  --space-7: 3rem;      /* 48px */
-  --space-8: 4rem;      /* 64px */
-
-  /* ---- Radii ---- */
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 16px;
-  --radius-pill: 999px;
-
-  /* ---- Shadows ---- */
-  --shadow-xs: 0 1px 2px rgba(44, 37, 32, 0.06);
-  --shadow-sm: 0 2px 6px rgba(44, 37, 32, 0.07);
-  --shadow-md: 0 8px 24px rgba(44, 37, 32, 0.10);
-  --shadow-lg: 0 18px 48px rgba(44, 37, 32, 0.14);
-
-  /* ---- Type scale (1.200 minor third, 16px base) ---- */
-  --text-xs: 0.75rem;    /* 12px */
-  --text-sm: 0.875rem;   /* 14px */
-  --text-base: 1rem;     /* 16px */
-  --text-md: 1.125rem;   /* 18px */
-  --text-lg: 1.375rem;   /* 22px */
-  --text-xl: 1.75rem;    /* 28px */
-  --text-2xl: 2.25rem;   /* 36px */
-  --text-3xl: 2.75rem;   /* 44px */
-
-  /* ---- Typography stacks ---- */
-  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+  /* ---- Tipografía ---- */
+  --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, sans-serif;
-  --font-serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia,
-    "Times New Roman", serif;
   --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
     "Liberation Mono", monospace;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-body: 1.0625rem;   /* 17px, cuerpo de lectura */
+  --text-lg: 1.25rem;
+  --text-xl: 1.625rem;
+  --text-2xl: 2.125rem;
+  --leading: 1.7;
+  --leading-tight: 1.25;
 
-  /* ---- Layout ---- */
-  --reading-width: 75ch;
-  --sidebar-width: 280px;
-  --header-height: 4.5rem;
-  --page-max: 1160px;
+  /* ---- Espaciado (base 4px) ---- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
 
-  /* ---- Motion ---- */
-  --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
-  --dur-fast: 120ms;
-  --dur-base: 200ms;
-  --dur-slow: 320ms;
+  /* ---- Formas ---- */
+  --radius: 8px;
+  --radius-sm: 4px;
+
+  /* ---- Medidas ---- */
+  --reading-width: 68ch;
+  --sidebar-width: 290px;
+  --header-height: 3.5rem;
+  --page-max: 52rem;
+
+  --dur: 150ms;
 }

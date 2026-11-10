@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 300" role="img" aria-labelledby="t d" font-family="-apple-system, Segoe UI, Roboto, Arial, sans-serif">
+  <title id="t">Laboratorio frente a campo</title>
+  <desc id="d">A la izquierda, una foto de laboratorio: una hoja sola sobre fondo uniforme, luz pareja. A la derecha, una foto de campo: la hoja con otras hojas detrás, sombras, tierra y encuadre imperfecto. Debajo, la idea: un modelo entrenado solo con la izquierda aprende atajos que no existen a la derecha.</desc>
+  <rect width="680" height="300" fill="#F6F4EE"/>
+  <g font-size="16" font-weight="700" fill="#2C2520" text-anchor="middle">
+    <text x="175" y="30">Laboratorio</text>
+    <text x="505" y="30">Campo (celular)</text>
+  </g>
+  <rect x="60" y="45" width="230" height="170" rx="8" fill="#D9D9D6" stroke="#D5CEBE" stroke-width="2"/>
+  <path d="M175 70 C 230 95, 235 175, 175 195 C 115 175, 120 95, 175 70 Z" fill="#739072"/>
+  <line x1="175" y1="75" x2="175" y2="192" stroke="#4F6F52" stroke-width="2"/>
+  <circle cx="160" cy="130" r="7" fill="#685B50"/>
+  <circle cx="190" cy="155" r="5" fill="#685B50"/>
+  <rect x="390" y="45" width="230" height="170" rx="8" fill="#C9BFA5" stroke="#D5CEBE" stroke-width="2"/>
+  <path d="M400 210 C 430 150, 470 140, 500 120 L 470 215 Z" fill="#5F8D4E" opacity="0.8"/>
+  <path d="M560 60 C 610 90, 615 160, 590 200 C 560 170, 540 110, 560 60 Z" fill="#4F6F52" opacity="0.85"/>
+  <path d="M505 75 C 560 100, 565 180, 505 200 C 445 180, 450 100, 505 75 Z" fill="#739072"/>
+  <path d="M420 45 L 520 45 L 480 215 L 390 215 Z" fill="#2C2520" opacity="0.18"/>
+  <circle cx="490" cy="135" r="7" fill="#685B50"/>
+  <circle cx="520" cy="160" r="5" fill="#685B50"/>
+  <g font-size="13" fill="#685B50" text-anchor="middle">
+    <text x="175" y="235">hoja sola · fondo uniforme · luz pareja</text>
+    <text x="505" y="235">otras hojas · sombras · tierra · encuadre</text>
+  </g>
+  <rect x="60" y="252" width="560" height="38" rx="8" fill="#F3EADF" stroke="#9A6B3F" stroke-width="1.5"/>
+  <text x="340" y="276" text-anchor="middle" font-size="14" fill="#2C2520">Entrenar solo con la izquierda enseña atajos (el fondo) que no existen a la derecha.</text>
+</svg>

@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 320" role="img" aria-labelledby="t d" font-family="-apple-system, Segoe UI, Roboto, Arial, sans-serif">
+  <title id="t">Las tres piezas de CropEye</title>
+  <desc id="d">La App a la izquierda, el Backend con su base de datos al centro abajo y la API de IA a la derecha. Una flecha directa une la App con la API de IA: camino directo. Otra flecha va de la App al Backend y del Backend a la API de IA: camino con cuenta.</desc>
+  <defs>
+    <marker id="f" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10z" fill="#4F6F52"/></marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10z" fill="#685B50"/></marker>
+  </defs>
+  <rect width="680" height="320" fill="#F6F4EE"/>
+  <g fill="#EAE5D9" stroke="#D5CEBE" stroke-width="2">
+    <rect x="20" y="40" width="170" height="110" rx="8"/>
+    <rect x="490" y="40" width="170" height="110" rx="8"/>
+    <rect x="255" y="190" width="170" height="110" rx="8"/>
+  </g>
+  <g text-anchor="middle" fill="#2C2520">
+    <text x="105" y="74" font-size="17" font-weight="700">App</text>
+    <text x="105" y="96" font-size="13" fill="#685B50">cropeye-app · Flutter</text>
+    <text x="105" y="118" font-size="13">cámara, resultado,</text>
+    <text x="105" y="135" font-size="13">historial y huerto</text>
+    <text x="575" y="74" font-size="17" font-weight="700">API de IA</text>
+    <text x="575" y="96" font-size="13" fill="#685B50">cropeye-ia · FastAPI</text>
+    <text x="575" y="118" font-size="13">filtro, modelo,</text>
+    <text x="575" y="135" font-size="13">confianza, mapa</text>
+    <text x="340" y="224" font-size="17" font-weight="700">Backend</text>
+    <text x="340" y="246" font-size="13" fill="#685B50">cropeye-api · FastAPI</text>
+    <text x="340" y="268" font-size="13">cuentas, base de datos,</text>
+    <text x="340" y="285" font-size="13">historial y auditoría</text>
+  </g>
+  <line x1="192" y1="80" x2="486" y2="80" stroke="#4F6F52" stroke-width="3" marker-end="url(#f)"/>
+  <text x="340" y="70" text-anchor="middle" font-size="14" font-weight="700" fill="#3E5940">Camino directo</text>
+  <g stroke="#685B50" stroke-width="2.5" stroke-dasharray="7 5" fill="none" marker-end="url(#g)">
+    <path d="M150 152 L 252 220"/>
+    <path d="M428 220 L 530 152"/>
+  </g>
+  <text x="152" y="205" text-anchor="middle" font-size="14" font-weight="700" fill="#685B50">Con cuenta</text>
+  <text x="528" y="205" text-anchor="middle" font-size="13" fill="#685B50">encarga el análisis</text>
+</svg>

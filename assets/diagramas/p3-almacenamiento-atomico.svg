@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 280" role="img" aria-labelledby="t d" font-family="-apple-system, Segoe UI, Roboto, Arial, sans-serif">
+  <title id="t">Escritura atómica</title>
+  <desc id="d">Tres pasos. Primero se crea la carpeta temporal 1715.tmp. Segundo, se escriben dentro foto.jpg, mapa.png y resultado.json. Tercero, se renombra a 1715. Si la app se cierra en los pasos uno o dos, solo queda un temporal que se ignora; el historial nunca ve un análisis a medias.</desc>
+  <defs>
+    <marker id="f" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10z" fill="#4F6F52"/></marker>
+  </defs>
+  <rect width="680" height="280" fill="#F6F4EE"/>
+  <g fill="#EAE5D9" stroke="#D5CEBE" stroke-width="2">
+    <rect x="20" y="50" width="180" height="120" rx="8"/>
+    <rect x="250" y="50" width="180" height="120" rx="8"/>
+  </g>
+  <rect x="480" y="50" width="180" height="120" rx="8" fill="#E3EFE0" stroke="#5F8D4E" stroke-width="2"/>
+  <g text-anchor="middle" font-size="14" font-weight="700" fill="#2C2520">
+    <text x="110" y="35">1. Crear temporal</text>
+    <text x="340" y="35">2. Escribir dentro</text>
+    <text x="570" y="35">3. Renombrar</text>
+  </g>
+  <g font-family="ui-monospace, Consolas, monospace" font-size="13" fill="#2C2520">
+    <text x="40" y="85">historial/</text>
+    <text x="55" y="108">1715.tmp/</text>
+    <text x="70" y="131" fill="#685B50">(vacía)</text>
+    <text x="270" y="85">1715.tmp/</text>
+    <text x="285" y="108">foto.jpg</text>
+    <text x="285" y="129">mapa.png</text>
+    <text x="285" y="150">resultado.json</text>
+    <text x="500" y="85">1715/</text>
+    <text x="515" y="108">foto.jpg</text>
+    <text x="515" y="129">mapa.png</text>
+    <text x="515" y="150">resultado.json</text>
+  </g>
+  <g stroke="#4F6F52" stroke-width="2.5" marker-end="url(#f)">
+    <line x1="202" y1="110" x2="246" y2="110"/>
+    <line x1="432" y1="110" x2="476" y2="110"/>
+  </g>
+  <text x="454" y="100" text-anchor="middle" font-size="11.5" fill="#3E5940" font-weight="700">de una vez</text>
+  <rect x="20" y="195" width="410" height="60" rx="8" fill="#F3EADF" stroke="#9A6B3F" stroke-width="1.5"/>
+  <text x="225" y="220" text-anchor="middle" font-size="13.5" font-weight="700" fill="#2C2520">Si la app se cierra en 1 o 2:</text>
+  <text x="225" y="240" text-anchor="middle" font-size="13" fill="#2C2520">queda un .tmp que el listado ignora</text>
+  <text x="570" y="220" text-anchor="middle" font-size="13.5" font-weight="700" fill="#2C2520">El historial ve</text>
+  <text x="570" y="240" text-anchor="middle" font-size="13" fill="#2C2520">el análisis completo</text>
+</svg>

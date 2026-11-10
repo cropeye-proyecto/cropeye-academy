@@ -3,53 +3,48 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="CropEye Academy: curso interactivo sobre la arquitectura del proyecto CropEye, de la agronomía al despliegue.">
+  <meta name="description" content="CropEye Academy: material de estudio del equipo para entender y defender el proyecto CropEye.">
   <meta name="color-scheme" content="light">
-  <title>CropEye Academy · Aprende la arquitectura desde adentro</title>
-
+  <title>CropEye Academy</title>
   <link rel="stylesheet" href="assets/css/tokens.css">
   <link rel="stylesheet" href="assets/css/base.css">
   <link rel="stylesheet" href="assets/css/layout.css">
   <link rel="stylesheet" href="assets/css/components.css">
-
   <script type="module" src="assets/js/main.js"></script>
 </head>
 <body>
-  <a class="skip-link" href="#main-content">Saltar al contenido</a>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
 
-  <header class="site-header">
-    <div class="site-header__inner">
-      <div class="site-header__brand">
-        <h1 class="site-title">
-          <a href="index.html">CropEye Academy</a>
-        </h1>
-        <p class="site-tagline" id="site-tagline">
-          Aprende la arquitectura del proyecto CropEye desde adentro
-        </p>
-      </div>
-      <div class="site-header__progress" id="header-progress"></div>
+  <header class="cabecera">
+    <div class="cabecera__interior">
+      <a class="marca" href="index.html">CropEye Academy</a>
+      <div class="cabecera__progreso" id="progreso"></div>
     </div>
   </header>
 
-  <main id="main-content" class="page">
-    <div class="page-intro">
-      <h2>Rutas de aprendizaje</h2>
+  <main id="contenido" class="pagina" tabindex="-1">
+    <section class="presentacion">
+      <h1>Cómo funciona CropEye</h1>
       <p>
-        Seis rutas y veinticuatro lecciones cortas para reconstruir cómo funciona CropEye:
-        el problema agronómico, el modelo, el backend, la aplicación móvil, la integración
-        y la documentación que sostiene las decisiones.
+        Este curso recorre el proyecto en el mismo orden en que conviene explicarlo: primero el
+        problema que intenta resolver, después la solución que proponemos, luego cada pieza por
+        dentro y, al final, cómo se conectan la app, el backend y la API de inteligencia
+        artificial durante un análisis.
       </p>
-    </div>
+      <p>
+        Cada lección termina con una autoevaluación y con una pregunta del tipo que haría una
+        comisión. Respóndelas en voz alta antes de abrir la respuesta: es la forma más directa de
+        comprobar que entendiste, y la mejor preparación para la defensa.
+      </p>
+      <p id="continuar" class="presentacion__continuar" hidden></p>
+    </section>
 
-    <div id="curriculum-root" class="path-list" aria-busy="true">
-      <p class="text-muted">Cargando el currículo…</p>
+    <div id="partes" class="partes" aria-busy="true">
+      <p class="texto-secundario">Cargando el curso…</p>
     </div>
 
     <noscript>
-      <p class="noscript-note">
-        Este curso necesita JavaScript para cargar el currículo y guardar tu progreso
-        en el navegador. Actívalo y vuelve a cargar la página.
-      </p>
+      <p class="aviso-noscript">Este curso necesita JavaScript para cargar las lecciones y guardar tu progreso.</p>
     </noscript>
   </main>
 </body>

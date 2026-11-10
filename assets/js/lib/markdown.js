@@ -1,29 +1,35 @@
 /**
- * Minimal, safe Markdown renderer.
+ * Renderizador de Markdown pequeño y seguro para las lecciones.
  *
- * Supported: headings (#..####), paragraphs, **bold**, *italic*, `code`,
- * fenced code blocks, ordered/unordered lists (nested), blockquotes,
- * horizontal rules, links (http/https/relative only) and callouts:
+ * Todo el texto se escapa ANTES de interpretar el formato, así que el HTML
+ * crudo del contenido nunca llega al DOM. Soporta:
  *
- *   :::note
- *   ...
- *   :::
+ *   # .. ####           encabezados (## y ### reciben un id para enlazar)
+ *   **negrita** *cursiva* `código` [texto](url http, https o relativa)
+ *   listas (anidadas), citas, reglas horizontales
+ *   ```lang ruta/del/archivo     bloque de código con la ruta como título
+ *   ![alt](assets/diagramas/x.svg)  diagrama SVG local (una línea propia)
+ *   :::note / :::warning          notas y advertencias
+ *   :::objetivos                  objetivos de aprendizaje (lista "- ")
+ *   :::autoevaluacion             pares "? pregunta" / "= respuesta → #ancla"
+ *   :::comision                   "? pregunta" (una línea), respuesta modelo, "! qué no decir"
  *
- * The whole source is HTML-escaped BEFORE inline formatting is applied, so
- * raw HTML in content can never reach the DOM. Output is a plain HTML string;
- * callers are responsible for inserting it into a trusted container.
+ * Un bloque ::: o ``` sin cierre se cierra al final del documento.
  */
 
 const CALLOUT_LABELS = { note: 'Nota', warning: 'Advertencia' };
 
 const LIST_ITEM_RE = /^(\s*)([-*+]|\d+[.)])\s+(.*)$/;
-const FENCE_RE = /^```\s*([a-zA-Z0-9-]*)\s*$/;
+const FENCE_RE = /^```\s*([a-zA-Z0-9-]*)(?:\s+(\S+))?\s*$/;
+const FENCE_END_RE = /^```\s*$/;
 const HEADING_RE = /^(#{1,6})\s+(.*)$/;
 const HR_RE = /^\s*([-*_])(\s*\1){2,}\s*$/;
-const QUOTE_RE = /^&gt;\s?/; // ">" is escaped before block parsing
-const CALLOUT_RE = /^:::\s*(note|warning)\s*$/;
+const QUOTE_RE = /^&gt;\s?/; // ">" ya viene escapado
+const BLOCK_RE = /^:::\s*(note|warning|objetivos|autoevaluacion|comision)\s*$/;
+const BLOCK_END_RE = /^:::\s*$/;
+const IMAGE_LINE_RE = /^!\[([^\]]*)\]\(([^)\s]+)\)\s*$/;
+const DIAGRAM_SRC_RE = /^assets\/diagramas\/[\w-]+(?:\/[\w-]+)*\.svg$/;
 
-/** Escape every character that could start markup or break an attribute. */
 function escapeHtml(value) {
   return String(value)
     .replace(/&/g, '&amp;')
@@ -33,193 +39,306 @@ function escapeHtml(value) {
     .replace(/'/g, '&#39;');
 }
 
-/**
- * Accept http(s) and same-document/relative URLs only.
- * Anything with another scheme (javascript:, data:, vbscript:, mailto:…)
- * is rejected so links cannot become an injection vector.
- */
+/** Acepta http(s) y rutas relativas o anclas; rechaza cualquier otro esquema. */
 function safeHref(raw) {
   const url = raw.trim();
   if (!url || /\s/.test(url)) return null;
   if (/^https?:\/\//i.test(url)) return url;
-  if (/^[a-z][a-z0-9+.-]*:/i.test(url)) return null; // any other scheme
-  if (/^[./?#]/.test(url)) return url; // ./x, ../x, /x, #x, ?x
-  if (/^[\w-]+([/?#].*)?$/.test(url)) return url; // content/lessons/x.md
+  if (/^[a-z][a-z0-9+.-]*:/i.test(url)) return null;
+  if (/^[./?#]/.test(url)) return url;
+  if (/^[\w-]+([/?#].*)?$/.test(url)) return url;
   return null;
 }
 
-/** Inline formatting. Input must already be HTML-escaped. */
+/** Id legible a partir de un título: minúsculas, sin tildes, con guiones. */
+export function slugify(text) {
+  return (
+    String(text)
+      .replace(/<[^>]*>/g, '')
+      .replace(/&[a-z0-9#]+;/gi, '')
+      .normalize('NFD')
+      .replace(/[̀-ͯ]/g, '')
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '') || 'seccion'
+  );
+}
+
+/** Formato en línea. La entrada ya está escapada. */
 function renderInline(text) {
   const codeSpans = [];
-
-  // 1. Protect inline code from any further formatting.
-  let out = text.replace(/`([^`]+)`/g, (_match, code) => {
+  let out = text.replace(/`([^`]+)`/g, (_m, code) => {
     codeSpans.push(`<code>${code}</code>`);
     return `\u0000${codeSpans.length - 1}\u0000`;
   });
 
-  // 2. Links (validated scheme, escaped text as attribute value).
-  out = out.replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, (match, label, href) => {
+  // Una imagen en medio de un párrafo no se dibuja: queda su texto.
+  out = out.replace(/!\[([^\]]*)\]\([^)\s]*\)/g, '$1');
+
+  out = out.replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, (_match, label, href) => {
     const safe = safeHref(href);
-    if (!safe) return match;
+    if (!safe) return label;
     return `<a href="${safe}" rel="noopener noreferrer">${label}</a>`;
   });
 
-  // 3. Strong, then emphasis.
   out = out.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
   out = out.replace(/(^|[^\w*])\*([^*\n]+)\*(?!\*)/g, '$1<em>$2</em>');
   out = out.replace(/(^|[^\w_])_([^_\n]+)_(?!_)/g, '$1<em>$2</em>');
 
-  // 4. Restore code spans.
-  return out.replace(/\u0000(\d+)\u0000/g, (_match, index) => codeSpans[Number(index)]);
+  return out.replace(/\u0000(\d+)\u0000/g, (_m, i) => codeSpans[Number(i)]);
 }
 
-/** True when a line starts a block that must not be folded into a paragraph. */
 function isBlockStart(line) {
   return (
     FENCE_RE.test(line) ||
-    CALLOUT_RE.test(line) ||
+    BLOCK_RE.test(line) ||
     HEADING_RE.test(line) ||
     HR_RE.test(line) ||
     QUOTE_RE.test(line) ||
-    LIST_ITEM_RE.test(line)
+    LIST_ITEM_RE.test(line) ||
+    IMAGE_LINE_RE.test(line)
   );
 }
 
-/** Render a nested list from flat indented items. */
 function parseList(lines, start) {
   const items = [];
   let i = start;
-
   while (i < lines.length) {
-    const line = lines[i];
-    const match = line.match(LIST_ITEM_RE);
-
+    const match = lines[i].match(LIST_ITEM_RE);
     if (!match) {
-      // A blank line only ends the list when the next line is not an item.
-      if (!line.trim() && i + 1 < lines.length && LIST_ITEM_RE.test(lines[i + 1])) {
+      if (!lines[i].trim() && i + 1 < lines.length && LIST_ITEM_RE.test(lines[i + 1])) {
         i += 1;
         continue;
       }
       break;
     }
-
     items.push({
       indent: match[1].replace(/\t/g, '    ').length,
       ordered: /\d/.test(match[2]),
       text: match[3],
-      children: [],
     });
     i += 1;
   }
 
-  // Build the tree with an indentation stack.
   const roots = [];
   const stack = [{ indent: -1, children: roots }];
-
   for (const item of items) {
-    while (stack.length > 1 && item.indent <= stack[stack.length - 1].indent) {
-      stack.pop();
-    }
-    const parent = stack[stack.length - 1];
+    while (stack.length > 1 && item.indent <= stack[stack.length - 1].indent) stack.pop();
     const node = { text: item.text, ordered: item.ordered, children: [] };
-    parent.children.push(node);
+    stack[stack.length - 1].children.push(node);
     stack.push({ indent: item.indent, children: node.children });
   }
-
   return { html: renderListNodes(roots), next: i };
 }
 
 function renderListNodes(nodes) {
   if (!nodes.length) return '';
-  const ordered = Boolean(nodes[0].ordered);
-  const tag = ordered ? 'ol' : 'ul';
+  const tag = nodes[0].ordered ? 'ol' : 'ul';
   const items = nodes
-    .map((node) => {
-      const nested = node.children.length ? renderListNodes(node.children) : '';
-      return `<li>${renderInline(node.text)}${nested}</li>`;
-    })
+    .map((n) => `<li>${renderInline(n.text)}${renderListNodes(n.children)}</li>`)
     .join('');
   return `<${tag}>${items}</${tag}>`;
 }
 
-/** Render an array of already-escaped lines into block HTML. */
-function renderBlocks(lines) {
+/** Lee las líneas de un bloque ::: hasta su cierre (o el final). */
+function takeBlock(lines, start) {
+  const buffer = [];
+  let i = start;
+  while (i < lines.length && !BLOCK_END_RE.test(lines[i])) {
+    buffer.push(lines[i]);
+    i += 1;
+  }
+  return { buffer, next: i + 1 };
+}
+
+function renderObjetivos(buffer) {
+  const items = buffer
+    .map((l) => l.match(/^\s*[-*]\s+(.*)$/))
+    .filter(Boolean)
+    .map((m) => `<li>${renderInline(m[1])}</li>`)
+    .join('');
+  return (
+    '<section class="objetivos">' +
+    '<h2 class="objetivos__titulo">Objetivos de aprendizaje</h2>' +
+    '<p>Al terminar esta lección deberías poder:</p>' +
+    `<ul>${items}</ul></section>`
+  );
+}
+
+/** Agrupa líneas "? …" / "= …" (con continuaciones) en pares. */
+function parsePairs(buffer) {
+  const pairs = [];
+  let current = null;
+  let field = null;
+  for (const raw of buffer) {
+    const line = raw.trim();
+    if (!line) continue;
+    if (line.startsWith('? ')) {
+      current = { pregunta: line.slice(2), respuesta: '' };
+      pairs.push(current);
+      field = 'pregunta';
+    } else if (line.startsWith('= ') && current) {
+      current.respuesta = line.slice(2);
+      field = 'respuesta';
+    } else if (current && field) {
+      current[field] += ` ${line}`;
+    }
+  }
+  return pairs;
+}
+
+function renderAutoevaluacion(buffer) {
+  const items = parsePairs(buffer)
+    .map(({ pregunta, respuesta }) => {
+      const m = respuesta.match(/^(.*?)\s*→\s*#([\w-]+)\s*$/);
+      const texto = m ? m[1] : respuesta;
+      const enlace = m
+        ? `<p class="autoevaluacion__repaso"><a href="#${m[2]}">Repasar la sección</a></p>`
+        : '';
+      return (
+        `<li><p class="autoevaluacion__pregunta">${renderInline(pregunta)}</p>` +
+        '<details><summary>Ver respuesta</summary>' +
+        `<p>${renderInline(texto)}</p>${enlace}</details></li>`
+      );
+    })
+    .join('');
+  return (
+    '<section class="autoevaluacion">' +
+    '<h2 id="autoevaluacion">Autoevaluación</h2>' +
+    '<p class="autoevaluacion__indicacion">Responde cada pregunta con tus palabras antes de abrir la respuesta.</p>' +
+    `<ol>${items}</ol></section>`
+  );
+}
+
+function renderComision(buffer, ctx) {
+  let pregunta = '';
+  let evitar = '';
+  const cuerpo = [];
+  let field = null;
+  for (const raw of buffer) {
+    const line = raw.trim();
+    if (line.startsWith('? ')) {
+      pregunta = line.slice(2);
+      field = 'pregunta';
+    } else if (line.startsWith('! ')) {
+      evitar = line.slice(2);
+      field = 'evitar';
+    } else if (!line) {
+      field = null;
+      cuerpo.push('');
+    } else if (field === 'evitar') {
+      evitar += ` ${line}`;
+    } else {
+      cuerpo.push(raw);
+    }
+  }
+  const evitarHtml = evitar
+    ? `<p class="comision__evitar"><strong>Qué no decir:</strong> ${renderInline(evitar)}</p>`
+    : '';
+  return (
+    '<section class="comision">' +
+    '<p class="comision__etiqueta">Pregunta de la comisión</p>' +
+    `<p class="comision__pregunta">${renderInline(pregunta)}</p>` +
+    '<details><summary>Ver respuesta modelo</summary>' +
+    `${renderBlocks(cuerpo, ctx)}${evitarHtml}</details></section>`
+  );
+}
+
+function renderBlocks(lines, ctx) {
   const out = [];
   let i = 0;
 
   while (i < lines.length) {
     const line = lines[i];
-
     if (!line.trim()) {
       i += 1;
       continue;
     }
 
-    // Fenced code block.
     const fence = line.match(FENCE_RE);
     if (fence) {
       const lang = fence[1].replace(/[^a-z0-9-]/gi, '');
+      const ruta = fence[2] || '';
       const buffer = [];
       i += 1;
-      while (i < lines.length && !/^```\s*$/.test(lines[i])) {
+      while (i < lines.length && !FENCE_END_RE.test(lines[i])) {
         buffer.push(lines[i]);
         i += 1;
       }
-      i += 1; // skip the closing fence
+      i += 1;
       const langAttr = lang ? ` class="language-${lang}"` : '';
-      // Lines are already HTML-escaped once, before block parsing.
-      out.push(`<pre><code${langAttr}>${buffer.join('\n')}</code></pre>`);
-      continue;
-    }
-
-    // Callout container.
-    const callout = line.match(CALLOUT_RE);
-    if (callout) {
-      const kind = callout[1];
-      const buffer = [];
-      i += 1;
-      while (i < lines.length && !/^:::\s*$/.test(lines[i])) {
-        buffer.push(lines[i]);
-        i += 1;
-      }
-      i += 1; // skip the closing marker
+      const pre = `<pre><code${langAttr}>${buffer.join('\n')}</code></pre>`;
       out.push(
-        `<div class="callout callout--${kind}" role="note">` +
-          `<span class="callout__label">${CALLOUT_LABELS[kind]}</span>` +
-          `${renderBlocks(buffer)}</div>`
+        ruta ? `<figure class="codigo"><figcaption>${ruta}</figcaption>${pre}</figure>` : pre
       );
       continue;
     }
 
-    // Heading.
+    const block = line.match(BLOCK_RE);
+    if (block) {
+      const kind = block[1];
+      const { buffer, next } = takeBlock(lines, i + 1);
+      i = next;
+      if (kind === 'objetivos') out.push(renderObjetivos(buffer));
+      else if (kind === 'autoevaluacion') out.push(renderAutoevaluacion(buffer));
+      else if (kind === 'comision') out.push(renderComision(buffer, ctx));
+      else {
+        out.push(
+          `<div class="callout callout--${kind}" role="note">` +
+            `<span class="callout__label">${CALLOUT_LABELS[kind]}</span>` +
+            `${renderBlocks(buffer, ctx)}</div>`
+        );
+      }
+      continue;
+    }
+
     const heading = line.match(HEADING_RE);
     if (heading) {
-      const level = heading[1].length;
-      out.push(`<h${level}>${renderInline(heading[2].trim())}</h${level}>`);
+      const level = Math.min(heading[1].length, 4);
+      const html = renderInline(heading[2].trim());
+      let idAttr = '';
+      if (level === 2 || level === 3) {
+        const base = slugify(html);
+        const count = (ctx.slugs.get(base) || 0) + 1;
+        ctx.slugs.set(base, count);
+        idAttr = ` id="${count === 1 ? base : `${base}-${count}`}"`;
+      }
+      out.push(`<h${level}${idAttr}>${html}</h${level}>`);
       i += 1;
       continue;
     }
 
-    // Horizontal rule.
+    const image = line.match(IMAGE_LINE_RE);
+    if (image) {
+      const [, alt, src] = image;
+      if (DIAGRAM_SRC_RE.test(src) && !src.includes('..')) {
+        out.push(
+          `<figure class="diagrama"><img src="${src}" alt="${alt}" loading="lazy">` +
+            `<figcaption>${alt}</figcaption></figure>`
+        );
+      } else {
+        out.push(`<p>${alt}</p>`);
+      }
+      i += 1;
+      continue;
+    }
+
     if (HR_RE.test(line)) {
       out.push('<hr>');
       i += 1;
       continue;
     }
 
-    // Blockquote: collect the quoted lines and render them recursively.
     if (QUOTE_RE.test(line)) {
       const buffer = [];
       while (i < lines.length && QUOTE_RE.test(lines[i])) {
         buffer.push(lines[i].replace(QUOTE_RE, ''));
         i += 1;
       }
-      out.push(`<blockquote>${renderBlocks(buffer)}</blockquote>`);
+      out.push(`<blockquote>${renderBlocks(buffer, ctx)}</blockquote>`);
       continue;
     }
 
-    // Lists.
     if (LIST_ITEM_RE.test(line)) {
       const parsed = parseList(lines, i);
       out.push(parsed.html);
@@ -227,7 +346,6 @@ function renderBlocks(lines) {
       continue;
     }
 
-    // Paragraph: consecutive plain lines are joined with a space.
     const paragraph = [];
     while (i < lines.length && lines[i].trim() && !isBlockStart(lines[i])) {
       paragraph.push(lines[i].trim());
@@ -240,12 +358,12 @@ function renderBlocks(lines) {
 }
 
 /**
- * Render Markdown to an HTML string.
+ * Convierte Markdown en HTML seguro.
  * @param {string} md
  * @returns {string}
  */
 export function renderMarkdown(md) {
   const source = String(md == null ? '' : md).replace(/\r\n?/g, '\n');
   const lines = source.split('\n').map(escapeHtml);
-  return renderBlocks(lines);
+  return renderBlocks(lines, { slugs: new Map() });
 }

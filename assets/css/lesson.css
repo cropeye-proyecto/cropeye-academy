@@ -1,337 +1,339 @@
-/* Lesson view: breadcrumbs, reading typography, callouts, code, tables. */
+/* Lección: migas, cabecera, tipografía de lectura y bloques de estudio. */
 
-/* ---------- Toolbar / breadcrumbs ---------- */
-
-.lesson-toolbar {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
+.leccion__articulo {
   max-width: var(--reading-width);
-  width: 100%;
-  margin: 0 auto var(--space-4);
+  margin: 0 auto;
 }
 
-.breadcrumbs {
-  min-width: 0;
-  flex: 1 1 auto;
-  font-size: var(--text-xs);
-  color: var(--text-muted);
-}
-
-.breadcrumbs__list {
+.migas {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-1);
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.breadcrumbs__list li {
-  margin: 0;
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-1);
-  min-width: 0;
-}
-
-.breadcrumbs__list li + li::before {
-  content: "›";
-  color: var(--border);
-  margin-right: var(--space-1);
-}
-
-.breadcrumbs a {
+  gap: var(--space-2);
+  font-size: var(--text-sm);
   color: var(--text-muted);
-  text-decoration: none;
-  border-bottom: 1px solid transparent;
+  margin-bottom: var(--space-5);
 }
 
-.breadcrumbs a:hover {
-  color: var(--accent);
-  border-bottom-color: var(--accent-soft);
-}
-
-.breadcrumbs [aria-current="page"] {
-  color: var(--text);
-  font-weight: 600;
-}
-
-/* Toggle shown on all sizes on mobile, and on desktop as a collapse control. */
-.sidebar-toggle {
-  flex: 0 0 auto;
-}
-
-/* ---------- Lesson hero ---------- */
-
-.lesson-hero {
-  max-width: var(--reading-width);
-  width: 100%;
-  margin: 0 auto var(--space-5);
+.leccion__cabecera {
+  margin-bottom: var(--space-6);
   padding-bottom: var(--space-5);
   border-bottom: 1px solid var(--border);
 }
 
-.lesson-hero__eyebrow {
-  margin: 0 0 var(--space-2);
-  font-size: var(--text-xs);
+.leccion__etiqueta {
+  font-size: var(--text-sm);
   font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--accent);
-}
-
-.lesson-hero__title {
-  margin: 0 0 var(--space-2);
-  font-size: var(--text-xl);
-  letter-spacing: -0.02em;
-}
-
-.lesson-hero__summary {
-  margin: 0 0 var(--space-3);
-  color: var(--text-muted);
-  font-size: var(--text-md);
-  line-height: 1.5;
-  max-width: 62ch;
-}
-
-.lesson-hero__meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2) var(--space-4);
-  font-size: var(--text-xs);
-  color: var(--text-muted);
-}
-
-.lesson-hero__meta span {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-1);
-}
-
-.lesson-hero__status[data-completed="true"] {
-  color: var(--success);
-  font-weight: 700;
-}
-
-.lesson-hero__status[data-completed="false"] {
-  color: var(--text-muted);
-}
-
-/* ---------- Reading column ---------- */
-
-.prose {
-  max-width: var(--reading-width);
-  width: 100%;
-  margin: 0 auto;
-  font-family: var(--font-serif);
-  font-size: var(--text-md);
-  line-height: 1.7;
-  color: var(--text);
-}
-
-.prose > * + * {
-  margin-top: var(--space-4);
-}
-
-.prose p {
-  margin: 0;
-}
-
-.prose h1 {
-  font-family: var(--font-sans);
-  font-size: var(--text-xl);
-  margin-top: var(--space-6);
-}
-
-/* The hero already renders the lesson title, so hide a duplicated H1. */
-.prose h1:first-child {
-  display: none;
-}
-
-.prose h2 {
-  font-family: var(--font-sans);
-  font-size: var(--text-lg);
-  margin-top: var(--space-6);
-  padding-top: var(--space-4);
-  border-top: 1px solid var(--border);
-}
-
-.prose h3 {
-  font-family: var(--font-sans);
-  font-size: var(--text-md);
-  margin-top: var(--space-5);
-}
-
-.prose h4 {
-  font-family: var(--font-sans);
-  font-size: var(--text-base);
-  margin-top: var(--space-4);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--text-muted);
-}
-
-.prose strong {
-  font-weight: 700;
-  color: var(--text);
-}
-
-.prose em {
-  font-style: italic;
-}
-
-.prose a {
-  color: var(--accent);
-}
-
-.prose ul,
-.prose ol {
-  padding-left: var(--space-5);
-  margin: 0;
-}
-
-.prose li {
+  color: var(--accent-hover);
   margin-bottom: var(--space-2);
 }
 
-.prose li > ul,
-.prose li > ol {
+.leccion__titulo {
+  font-size: var(--text-2xl);
+  margin-bottom: var(--space-3);
+}
+
+.leccion__resumen {
+  font-size: var(--text-lg);
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* ---- Prosa ---- */
+
+.prosa {
+  font-size: var(--text-body);
+  line-height: var(--leading);
+}
+
+.prosa > * + * {
+  margin-top: var(--space-4);
+}
+
+.prosa h2 {
+  font-size: var(--text-xl);
+  margin-top: var(--space-7);
+}
+
+.prosa h3 {
+  font-size: var(--text-lg);
+  margin-top: var(--space-6);
+}
+
+.prosa h4 {
+  font-size: var(--text-base);
+  margin-top: var(--space-5);
+}
+
+.prosa ul,
+.prosa ol {
+  padding-left: 1.5em;
+}
+
+.prosa li + li {
   margin-top: var(--space-2);
 }
 
-.prose blockquote {
-  margin: var(--space-5) 0;
-  padding: var(--space-3) var(--space-5);
-  border-left: 3px solid var(--accent-soft);
-  background-color: var(--surface);
-  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+.prosa code {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.05em 0.3em;
+}
+
+.prosa pre {
+  background: var(--code-bg);
+  color: var(--code-text);
+  border-radius: var(--radius);
+  padding: var(--space-4);
+  overflow-x: auto;
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+.prosa pre code {
+  background: none;
+  border: 0;
+  padding: 0;
+  font-size: inherit;
+  color: inherit;
+}
+
+.prosa blockquote {
+  border-left: 3px solid var(--border);
+  padding-left: var(--space-4);
   color: var(--text-muted);
-  font-style: italic;
 }
 
-.prose blockquote p:last-child {
-  margin-bottom: 0;
-}
-
-.prose hr {
+.prosa hr {
+  border: 0;
+  border-top: 1px solid var(--border);
   margin: var(--space-6) 0;
 }
 
-/* Inline code */
-.prose :not(pre) > code {
-  padding: 0.12em 0.36em;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  background-color: var(--surface);
-  color: var(--text);
-  font-size: 0.85em;
-  overflow-wrap: break-word;
-}
-
-/* Fenced code blocks */
-.prose pre {
-  margin: var(--space-5) 0;
-  padding: var(--space-4);
-  overflow-x: auto;
-  background-color: #2C2520;
-  color: #EDE7DB;
-  border-radius: var(--radius-md);
-  border: 1px solid #3A322B;
-  line-height: 1.55;
+/* Código con la ruta del archivo */
+.codigo figcaption {
+  font-family: var(--font-mono);
   font-size: var(--text-sm);
-  -webkit-overflow-scrolling: touch;
+  color: var(--text-muted);
+  margin-bottom: var(--space-2);
+  overflow-wrap: anywhere;
 }
 
-.prose pre code {
-  padding: 0;
-  border: 0;
-  background: transparent;
-  color: inherit;
-  font-size: inherit;
-  white-space: pre;
+/* Diagramas */
+.diagrama {
+  margin-top: var(--space-5);
+  margin-bottom: var(--space-5);
+  overflow-x: auto;
 }
 
-/* ---------- Callouts ---------- */
+.diagrama img {
+  display: block;
+  width: 100%;
+  max-width: 44rem;
+  margin: 0 auto;
+}
 
+.diagrama figcaption {
+  margin-top: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  text-align: center;
+}
+
+/* Notas y advertencias */
 .callout {
-  margin: var(--space-5) 0;
-  padding: var(--space-4) var(--space-4) var(--space-3);
-  border: 1px solid var(--border);
-  border-left: 4px solid var(--accent-soft);
-  border-radius: var(--radius-md);
-  background-color: var(--surface);
-  font-family: var(--font-sans);
-  font-size: var(--text-base);
-  line-height: 1.6;
+  border-left: 4px solid var(--accent);
+  background: var(--surface-raised);
+  padding: var(--space-3) var(--space-4);
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+
+.callout--warning {
+  border-left-color: var(--warning-border);
+  background: var(--warning-bg);
 }
 
 .callout__label {
   display: block;
-  margin-bottom: var(--space-2);
-  font-size: var(--text-xs);
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--accent);
-}
-
-.callout p:last-child,
-.callout ul:last-child,
-.callout ol:last-child {
-  margin-bottom: 0;
-}
-
-.callout--note {
-  border-left-color: var(--accent-soft);
-  background-color: var(--surface);
-}
-
-.callout--warning {
-  border-left-color: #A9713F;
-  background-color: #F4EADF;
-  border-color: #E0CFB9;
-}
-
-.callout--warning .callout__label {
-  color: #8A5A2E;
-}
-
-/* ---------- Tables (defensive: content may include simple tables) ---------- */
-
-.prose table {
-  margin: var(--space-5) 0;
-  font-family: var(--font-sans);
   font-size: var(--text-sm);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  overflow: hidden;
-}
-
-.prose th,
-.prose td {
-  padding: var(--space-2) var(--space-3);
-  border-bottom: 1px solid var(--border);
-  text-align: left;
-  vertical-align: top;
-}
-
-.prose th {
-  background-color: var(--surface);
   font-weight: 700;
+  margin-bottom: var(--space-1);
 }
 
-.prose tr:last-child td {
-  border-bottom: 0;
+.callout > p + p {
+  margin-top: var(--space-2);
 }
 
-@media (max-width: 600px) {
-  .prose {
+/* Objetivos */
+.objetivos {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--space-4) var(--space-5);
+}
+
+.prosa .objetivos__titulo {
+  font-size: var(--text-base);
+  margin: 0 0 var(--space-2);
+}
+
+.objetivos ul {
+  margin-top: var(--space-2);
+}
+
+/* Autoevaluación */
+.prosa .autoevaluacion h2 {
+  margin-bottom: var(--space-2);
+}
+
+.autoevaluacion__indicacion {
+  color: var(--text-muted);
+}
+
+.autoevaluacion ol {
+  margin-top: var(--space-4);
+}
+
+.autoevaluacion li + li {
+  margin-top: var(--space-5);
+}
+
+.autoevaluacion__pregunta {
+  font-weight: 600;
+}
+
+details {
+  margin-top: var(--space-2);
+}
+
+summary {
+  cursor: pointer;
+  color: var(--accent);
+  font-weight: 600;
+  width: fit-content;
+}
+
+summary:hover {
+  color: var(--accent-hover);
+}
+
+details[open] > summary {
+  margin-bottom: var(--space-2);
+}
+
+details > :not(summary) {
+  padding-left: var(--space-4);
+  border-left: 2px solid var(--border);
+}
+
+details > :not(summary) + :not(summary) {
+  margin-top: var(--space-3);
+}
+
+.autoevaluacion__repaso {
+  font-size: var(--text-sm);
+}
+
+/* Pregunta de la comisión */
+.comision {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--space-4) var(--space-5);
+  margin-top: var(--space-6);
+}
+
+.comision__etiqueta {
+  font-size: var(--text-sm);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent-hover);
+}
+
+.comision__pregunta {
+  font-size: var(--text-lg);
+  font-weight: 600;
+  line-height: 1.45;
+  margin: var(--space-2) 0 var(--space-3);
+}
+
+.comision summary,
+.comision a {
+  /* El salvia normal no alcanza AA sobre arena (4,48). */
+  color: var(--accent-hover);
+}
+
+.comision__evitar {
+  color: var(--text);
+}
+
+/* ---- Pie ---- */
+
+.pie {
+  margin-top: var(--space-8);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--border);
+  display: grid;
+  gap: var(--space-5);
+}
+
+.pie__vecinos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+}
+
+.pie__enlace {
+  display: grid;
+  gap: var(--space-1);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  text-decoration: none;
+  color: var(--text);
+}
+
+.pie__enlace:hover {
+  border-color: var(--accent);
+  background: var(--surface-raised);
+}
+
+.pie__enlace--next {
+  text-align: right;
+  grid-column: 2;
+}
+
+.pie__sentido {
+  font-size: var(--text-sm);
+  color: var(--accent-hover);
+  font-weight: 600;
+}
+
+.pie__titulo {
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+@media (max-width: 560px) {
+  .leccion__titulo {
+    font-size: var(--text-xl);
+  }
+
+  .leccion__resumen {
     font-size: var(--text-base);
   }
 
-  .lesson-hero__title {
-    font-size: var(--text-lg);
+  .pie__vecinos {
+    grid-template-columns: 1fr;
+  }
+
+  .pie__enlace--next {
+    grid-column: auto;
+  }
+
+  .comision {
+    padding: var(--space-4);
   }
 }

@@ -1,204 +1,83 @@
 /**
- * Dashboard rendering: one card per path, modules and sections nested inside.
- * Collapse state lives in module memory only (a reload resets it on purpose).
+ * Panel de inicio: una tarjeta por parte con su lista de lecciones.
  */
 
-import { el, clear, statusIcon } from '../lib/dom.js';
-import { allLessons } from '../core/content.js';
+import { lessonsOfPart } from '../core/content.js';
 import { isCompleted } from '../core/state.js';
+import { el, clear, statusIcon } from '../lib/dom.js';
 
-/** Path ids currently collapsed. Memory-only, never persisted. */
-const collapsedPaths = new Set();
-
-/**
- * Render the full dashboard into a container.
- * @param {HTMLElement} container
- * @param {Object} curriculum
- */
-export function renderCurriculum(container, curriculum) {
-  clear(container);
-
-  const fragment = document.createDocumentFragment();
-  (curriculum.paths || []).forEach((path, index) => {
-    fragment.append(buildPathCard(path, index));
-  });
-
-  container.append(fragment);
-  updateLessonStates(container);
-}
-
-function buildPathCard(path, index) {
-  const expanded = !collapsedPaths.has(path.id);
-  const bodyId = `path-body-${path.id}`;
-  const lessons = allLessons({ paths: [path] });
-
-  const countNode = el('span', {
-    class: 'path-card__count',
-    dataset: { pathCount: path.id },
-    text: `${lessons.length} lecciones`,
-  });
-
-  const toggle = el(
-    'button',
-    {
-      class: 'btn btn--ghost btn--icon path-card__toggle',
-      attrs: {
-        type: 'button',
-        'aria-expanded': String(expanded),
-        'aria-controls': bodyId,
-        'aria-label': expanded
-          ? `Ocultar las lecciones de ${path.title}`
-          : `Mostrar las lecciones de ${path.title}`,
-      },
-    },
-    el('span', { class: 'chevron' }),
-  );
-
-  const header = el(
-    'header',
-    { class: 'path-card__header' },
-    el(
-      'div',
-      { class: 'path-card__meta' },
-      el('p', { class: 'path-card__eyebrow', text: `Ruta ${index + 1}` }),
-      el('h3', { class: 'path-card__title', text: path.title }),
-      el('p', { class: 'path-card__desc', text: path.description }),
-    ),
-    el('div', { class: 'path-card__side' }, countNode, toggle),
-  );
-
-  const bodyInner = el('div', { class: 'path-card__body-inner' });
-  for (const module of path.modules || []) {
-    bodyInner.append(buildModule(path, module));
-  }
-
-  const body = el('div', { class: 'path-card__body', attrs: { id: bodyId } }, bodyInner);
-
-  const card = el(
-    'article',
-    {
-      class: 'path-card',
-      attrs: { id: `path-${path.id}` },
-      dataset: { pathId: path.id, expanded: String(expanded) },
-    },
-    header,
-    body,
-  );
-
-  toggle.addEventListener('click', () => {
-    const next = card.dataset.expanded !== 'true';
-    card.dataset.expanded = String(next);
-    toggle.setAttribute('aria-expanded', String(next));
-    toggle.setAttribute(
-      'aria-label',
-      next ? `Ocultar las lecciones de ${path.title}` : `Mostrar las lecciones de ${path.title}`,
-    );
-    if (next) collapsedPaths.delete(path.id);
-    else collapsedPaths.add(path.id);
-  });
-
-  return card;
-}
-
-function buildModule(path, module) {
-  const node = el(
-    'div',
-    {
-      class: 'module',
-      attrs: { id: `path-${path.id}-module-${module.id}` },
-    },
-    el('h4', { class: 'module__title', text: module.title }),
-    el('p', { class: 'module__desc', text: module.description }),
-  );
-
-  for (const section of module.sections || []) {
-    node.append(buildSection(section));
-  }
-
-  return node;
-}
-
-function buildSection(section) {
-  const headingId = `heading-${section.id}`;
-
-  const node = el(
-    'section',
-    {
-      class: 'section',
-      attrs: { id: `section-${section.id}`, 'aria-labelledby': headingId },
-    },
-    el('h5', { class: 'section__title', attrs: { id: headingId }, text: section.title }),
-  );
-
-  const list = el('ul', { class: 'lesson-list' });
-  for (const lesson of section.lessons || []) {
-    list.append(el('li', {}, buildLessonRow(lesson)));
-  }
-  node.append(list);
-
-  return node;
-}
-
-function buildLessonRow(lesson) {
-  const completed = isCompleted(lesson.id);
-
+function filaLeccion(lesson) {
+  const done = isCompleted(lesson.id);
+  const cierre = lesson.kind === 'cierre';
   return el(
-    'a',
-    {
-      class: 'lesson-row',
-      attrs: { href: `lesson.html?lesson=${encodeURIComponent(lesson.id)}` },
-      dataset: { lessonId: lesson.id, completed: String(completed) },
-    },
-    statusIcon(completed),
+    'li',
+    { class: `fila${cierre ? ' fila--cierre' : ''}`, dataset: { lessonId: lesson.id } },
     el(
-      'span',
-      { class: 'lesson-row__body' },
+      'a',
+      {
+        class: 'fila__enlace',
+        attrs: { href: `lesson.html?lesson=${encodeURIComponent(lesson.id)}` },
+      },
+      el('span', { class: 'fila__numero', text: cierre ? '' : String(lesson.number) }),
       el(
         'span',
-        { class: 'lesson-row__title', text: lesson.title },
-        el('span', {
-          class: 'visually-hidden',
-          dataset: { statusText: '' },
-          text: completed ? 'Completada' : 'Pendiente',
-        }),
+        { class: 'fila__texto' },
+        el('span', { class: 'fila__titulo', text: lesson.title }),
+        el('span', { class: 'fila__resumen', text: lesson.summary || '' }),
       ),
-      el('span', { class: 'lesson-row__summary', text: lesson.summary }),
+      el('span', { class: 'fila__minutos', text: `${lesson.minutes} min` }),
+      statusIcon(done, done ? 'Completada' : 'Pendiente'),
     ),
-    el('span', { class: 'lesson-row__meta', text: `${lesson.minutes} min` }),
   );
 }
 
-/**
- * Sync every rendered lesson row with the current state.
- * Safe to call on the whole document or on a subtree.
- * @param {ParentNode} [root]
- */
-export function updateLessonStates(root = document) {
-  for (const row of root.querySelectorAll('.lesson-row[data-lesson-id]')) {
-    const completed = isCompleted(row.dataset.lessonId);
-    row.dataset.completed = String(completed);
-
-    const icon = row.querySelector('.status-icon');
-    if (icon) icon.replaceWith(statusIcon(completed));
-
-    const statusText = row.querySelector('[data-status-text]');
-    if (statusText) statusText.textContent = completed ? 'Completada' : 'Pendiente';
-  }
-
-  for (const card of root.querySelectorAll('.path-card[data-path-id]')) {
-    updatePathCount(card);
-  }
+function conteo(partId) {
+  const lecciones = lessonsOfPart(partId);
+  const hechas = lecciones.filter((l) => isCompleted(l.id)).length;
+  return `${hechas} de ${lecciones.length} completadas`;
 }
 
-function updatePathCount(card) {
-  const rows = card.querySelectorAll('.lesson-row[data-lesson-id]');
-  if (!rows.length) return;
+/** Dibuja las tarjetas de las partes dentro de [container]. */
+export function renderCurriculum(container, curriculum) {
+  clear(container);
+  curriculum.parts.forEach((part, i) => {
+    const tituloId = `parte-${part.id}`;
+    container.append(
+      el(
+        'section',
+        {
+          class: 'parte',
+          attrs: { 'aria-labelledby': tituloId },
+          dataset: { partId: part.id },
+        },
+        el(
+          'header',
+          { class: 'parte__cabecera' },
+          el(
+            'div',
+            { class: 'parte__fila' },
+            el('p', { class: 'parte__etiqueta', text: `Parte ${i + 1}` }),
+            el('p', { class: 'parte__conteo', text: conteo(part.id) }),
+          ),
+          el('h2', { class: 'parte__titulo', attrs: { id: tituloId }, text: part.title }),
+          el('p', { class: 'parte__resumen', text: part.summary || '' }),
+        ),
+        el('ol', { class: 'parte__lecciones' }, lessonsOfPart(part.id).map(filaLeccion)),
+      ),
+    );
+  });
+  container.removeAttribute('aria-busy');
+}
 
-  let done = 0;
-  for (const row of rows) {
-    if (row.dataset.completed === 'true') done += 1;
+/** Actualiza marcas y conteos sin volver a dibujar todo. */
+export function updateLessonStates(root = document) {
+  for (const fila of root.querySelectorAll('[data-lesson-id]')) {
+    const done = isCompleted(fila.dataset.lessonId);
+    const icono = fila.querySelector('.status-icon');
+    if (icono) icono.replaceWith(statusIcon(done, done ? 'Completada' : 'Pendiente'));
   }
-
-  const counter = card.querySelector('[data-path-count]');
-  if (counter) counter.textContent = `${done} de ${rows.length} completadas`;
+  for (const parte of root.querySelectorAll('[data-part-id]')) {
+    const c = parte.querySelector('.parte__conteo');
+    if (c) c.textContent = conteo(parte.dataset.partId);
+  }
 }

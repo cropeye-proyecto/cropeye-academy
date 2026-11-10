@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 300" role="img" aria-labelledby="t d" font-family="-apple-system, Segoe UI, Roboto, Arial, sans-serif">
+  <title id="t">Datos personales por pieza</title>
+  <desc id="d">Tres columnas. App: fotos, EXIF, comuna e historial del huerto; protegidos con EXIF eliminado, datos en el teléfono, comuna redondeada a 1 km y consentimiento para "¿Acertó?". Backend: nombre, correo, región, IP y análisis; protegidos con contraseñas en hash, tokens revocables y auditoría. API de IA: no guarda datos personales; recibe la foto ya sin EXIF y la olvida.</desc>
+  <rect width="680" height="300" fill="#F6F4EE"/>
+  <g fill="#EAE5D9" stroke="#D5CEBE" stroke-width="2">
+    <rect x="10" y="15" width="215" height="270" rx="8"/>
+    <rect x="235" y="15" width="215" height="270" rx="8"/>
+    <rect x="460" y="15" width="210" height="270" rx="8"/>
+  </g>
+  <g font-size="16" font-weight="700" fill="#2C2520" text-anchor="middle">
+    <text x="117" y="42">App</text>
+    <text x="342" y="42">Backend</text>
+    <text x="565" y="42">API de IA</text>
+  </g>
+  <g font-size="12.5" font-weight="700" fill="#685B50">
+    <text x="25" y="68">QUÉ TOCA</text>
+    <text x="250" y="68">QUÉ TOCA</text>
+    <text x="475" y="68">QUÉ TOCA</text>
+    <text x="25" y="168">CÓMO SE PROTEGE</text>
+    <text x="250" y="168">CÓMO SE PROTEGE</text>
+    <text x="475" y="168">CÓMO SE PROTEGE</text>
+  </g>
+  <g font-size="13" fill="#2C2520">
+    <text x="25" y="90">fotos y su EXIF</text>
+    <text x="25" y="110">comuna (clima)</text>
+    <text x="25" y="130">historial del huerto</text>
+    <text x="25" y="190">EXIF eliminado</text>
+    <text x="25" y="210">datos en el teléfono</text>
+    <text x="25" y="230">comuna a ~1 km</text>
+    <text x="25" y="250">consentimiento y retiro</text>
+    <text x="25" y="270">uso sin cuenta</text>
+    <text x="250" y="90">nombre, correo, región</text>
+    <text x="250" y="110">IP en la auditoría</text>
+    <text x="250" y="130">análisis por cuenta</text>
+    <text x="250" y="190">contraseñas en hash</text>
+    <text x="250" y="210">tokens revocables</text>
+    <text x="250" y="230">auditoría de accesos</text>
+    <text x="475" y="90">la foto, solo durante</text>
+    <text x="475" y="110">el análisis</text>
+    <text x="475" y="190">no guarda nada</text>
+    <text x="475" y="210">recibe la foto</text>
+    <text x="475" y="230">ya sin EXIF</text>
+  </g>
+</svg>

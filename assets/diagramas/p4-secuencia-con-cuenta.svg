@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 430" role="img" aria-labelledby="t d" font-family="-apple-system, Segoe UI, Roboto, Arial, sans-serif">
+  <title id="t">Secuencia del recorrido con cuenta</title>
+  <desc id="d">Participantes: App, Backend, almacenamiento de archivos y API de IA. 1: la App crea el análisis y recibe un id y una URL firmada; estado PENDIENTE. 2: la App sube la foto al almacenamiento con PUT. 3: la App envía submit y recibe 202; estado PROCESSING. El Backend encarga la inferencia a la API de IA en segundo plano. 4: la App consulta el estado cada segundo hasta COMPLETADO, RECHAZADO o ERROR. 5: la App pide el resultado y descarga el mapa de calor con otra URL firmada.</desc>
+  <defs>
+    <marker id="f" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10z" fill="#4F6F52"/></marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10z" fill="#685B50"/></marker>
+  </defs>
+  <rect width="680" height="430" fill="#F6F4EE"/>
+  <g fill="#EAE5D9" stroke="#D5CEBE" stroke-width="2">
+    <rect x="15" y="12" width="120" height="38" rx="8"/>
+    <rect x="200" y="12" width="120" height="38" rx="8"/>
+    <rect x="375" y="12" width="140" height="38" rx="8"/>
+    <rect x="545" y="12" width="120" height="38" rx="8"/>
+  </g>
+  <g text-anchor="middle" font-size="14" font-weight="700" fill="#2C2520">
+    <text x="75" y="36">App</text>
+    <text x="260" y="36">Backend</text>
+    <text x="445" y="36">Almacenamiento</text>
+    <text x="605" y="36">API de IA</text>
+  </g>
+  <g stroke="#D5CEBE" stroke-width="2" stroke-dasharray="4 4">
+    <line x1="75" y1="51" x2="75" y2="415"/>
+    <line x1="260" y1="51" x2="260" y2="415"/>
+    <line x1="445" y1="51" x2="445" y2="415"/>
+    <line x1="605" y1="51" x2="605" y2="415"/>
+  </g>
+  <g stroke-width="2.2" fill="none">
+    <line x1="77" y1="80" x2="255" y2="80" stroke="#4F6F52" marker-end="url(#f)"/>
+    <line x1="258" y1="104" x2="80" y2="104" stroke="#685B50" marker-end="url(#g)"/>
+    <line x1="77" y1="140" x2="440" y2="140" stroke="#4F6F52" marker-end="url(#f)"/>
+    <line x1="77" y1="180" x2="255" y2="180" stroke="#4F6F52" marker-end="url(#f)"/>
+    <line x1="258" y1="202" x2="80" y2="202" stroke="#685B50" marker-end="url(#g)"/>
+    <line x1="262" y1="226" x2="600" y2="226" stroke="#4F6F52" stroke-dasharray="6 4" marker-end="url(#f)"/>
+    <line x1="603" y1="250" x2="265" y2="250" stroke="#685B50" stroke-dasharray="6 4" marker-end="url(#g)"/>
+    <line x1="77" y1="290" x2="255" y2="290" stroke="#4F6F52" marker-end="url(#f)"/>
+    <line x1="258" y1="312" x2="80" y2="312" stroke="#685B50" marker-end="url(#g)"/>
+    <line x1="77" y1="352" x2="255" y2="352" stroke="#4F6F52" marker-end="url(#f)"/>
+    <line x1="77" y1="392" x2="440" y2="392" stroke="#4F6F52" marker-end="url(#f)"/>
+  </g>
+  <g font-size="12.5" fill="#2C2520">
+    <text x="84" y="73">1. POST /analisis + token</text>
+    <text x="92" y="98" fill="#685B50">id + URL firmada · PENDIENTE</text>
+    <text x="84" y="133">2. PUT foto a la URL firmada</text>
+    <text x="84" y="173">3. POST /{id}/submit</text>
+    <text x="92" y="196" fill="#685B50">202 · PROCESSING</text>
+    <text x="300" y="220">en segundo plano: inferencia</text>
+    <text x="300" y="244" fill="#685B50">resultado + top 3 a la base</text>
+    <text x="84" y="283">4. GET /{id}/status (cada 1 s)</text>
+    <text x="92" y="328" fill="#685B50">COMPLETADO · RECHAZADO · ERROR</text>
+    <text x="84" y="345">5. GET /{id}/resultado</text>
+    <text x="84" y="385">descargar mapa (URL firmada)</text>
+  </g>
+</svg>

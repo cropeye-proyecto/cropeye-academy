@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 340" role="img" aria-labelledby="t d" font-family="-apple-system, Segoe UI, Roboto, Arial, sans-serif">
+  <title id="t">Avance de una enfermedad foliar en el tiempo</title>
+  <desc id="d">Gráfico conceptual. El eje horizontal es el tiempo y el vertical el daño. La curva de daño es casi plana durante la incubación, sube al aparecer los primeros síntomas y se dispara cuando las lesiones producen esporas. Una franja marca la ventana para actuar, justo cuando los síntomas son pequeños.</desc>
+  <rect width="680" height="340" fill="#F6F4EE"/>
+  <!-- ventana para actuar -->
+  <rect x="250" y="40" width="130" height="240" fill="#E3EFE0"/>
+  <text x="315" y="62" text-anchor="middle" font-size="15" font-weight="700" fill="#3E5940">Ventana para actuar</text>
+  <!-- ejes -->
+  <g stroke="#685B50" stroke-width="2" fill="none">
+    <line x1="60" y1="280" x2="650" y2="280"/>
+    <line x1="60" y1="280" x2="60" y2="30"/>
+  </g>
+  <path d="M60 280 L640 280" stroke="none"/>
+  <text x="650" y="305" text-anchor="end" font-size="14" fill="#685B50">tiempo</text>
+  <text x="50" y="40" text-anchor="end" font-size="14" fill="#685B50">daño</text>
+  <!-- curva -->
+  <path d="M60 275 C 160 274, 230 270, 270 258 S 380 215, 430 170 S 540 60, 640 45" fill="none" stroke="#4F6F52" stroke-width="4"/>
+  <!-- fases -->
+  <g font-size="14" fill="#2C2520" text-anchor="middle">
+    <text x="155" y="250">Incubación</text>
+    <text x="155" y="268" fill="#685B50" font-size="13">la hoja se ve sana</text>
+    <text x="315" y="225">Primeros síntomas</text>
+    <text x="315" y="243" fill="#685B50" font-size="13">manchas pequeñas</text>
+    <text x="545" y="150">Propagación</text>
+    <text x="545" y="168" fill="#685B50" font-size="13">nuevas esporas</text>
+  </g>
+  <g stroke="#9A6B3F" stroke-width="2" stroke-dasharray="5 5">
+    <line x1="250" y1="80" x2="250" y2="280"/>
+    <line x1="380" y1="80" x2="380" y2="280"/>
+  </g>
+  <text x="70" y="325" font-size="13" fill="#685B50">Infección</text>
+</svg>

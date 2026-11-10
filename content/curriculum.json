@@ -9,6 +9,13 @@
       "summary": "Antes de hablar de software conviene entender qué se intenta resolver: cómo avanza una enfermedad en la hoja y por qué quien cultiva llega tarde a detectarla.",
       "lessons": [
         {
+          "id": "_muestra",
+          "title": "Lección de muestra",
+          "summary": "Solo para revisar el diseño.",
+          "minutes": 5,
+          "file": "content/lessons/_muestra.md"
+        },
+        {
           "id": "p1-01",
           "title": "Enfermedades foliares: qué son y por qué el tiempo importa",
           "summary": "Qué es una enfermedad foliar, cómo avanza y por qué cada día de retraso cuesta más.",

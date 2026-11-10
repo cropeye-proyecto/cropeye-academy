@@ -1,17 +1,18 @@
 /**
  * Progress state: the single source of truth for completed lessons.
  *
- * Persisted in localStorage under "cropeye.progress" with this shape:
- *   { "version": 1, "completed": ["p1-m1-s1-l1", ...] }
+ * Persisted in localStorage under "cropeye.academy.v2" with this shape:
+ *   { "version": 2, "completed": ["p1-01", ...] }
+ * The prototype's key ("cropeye.progress") is ignored on purpose.
  *
  * Every mutation emits both a local subscriber notification and a custom DOM
  * event, so the dashboard, the sidebar and the lesson footer stay in sync
  * without knowing about each other.
  */
 
-export const STORAGE_KEY = 'cropeye.progress';
+export const STORAGE_KEY = 'cropeye.academy.v2';
 export const CHANGE_EVENT = 'cropeye:progress-change';
-const STATE_VERSION = 1;
+const STATE_VERSION = 2;
 
 const listeners = new Set();
 let state = emptyState();
@@ -109,6 +110,15 @@ export function toggle(lessonId) {
   return isCompleted(lessonId);
 }
 
+/**
+ * First id of [ids] that is not completed, for "Continuar donde quedaste".
+ * @param {string[]} ids
+ * @returns {string|null}
+ */
+export function firstPending(ids) {
+  return ids.find((id) => !completedSet.has(id)) || null;
+}
+
 /** Total number of completed lessons. */
 export function countCompleted() {
   return state.completed.length;
@@ -132,7 +142,7 @@ export function subscribe(fn) {
 
 // Re-sync when another tab changes the same key.
 try {
-  window.addEventListener('storage', (event) => {
+  window.addEventListener?.('storage', (event) => {
     if (event.key !== STORAGE_KEY) return;
     state = readState();
     completedSet = new Set(state.completed);
